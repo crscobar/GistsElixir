@@ -20,9 +20,9 @@ module.exports = {
           light: "#828282"
         },
         gistPurp: {
-          dark: "#631A61",
-          DEFAULT: "#A834A5",
-          light: "#E88FE5"
+          dark: "#693a7a",
+          DEFAULT: "#804794",
+          light: "#9553ad"
         },
         gistLav: {
           dark: "#8C52FF",

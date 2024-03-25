@@ -1,6 +1,27 @@
-<.flash_group flash={@flash}/>
 <div class="gist-gradient flex items-center justify-center">
   <h1 class="font-brand font-bold text-3xl text-white">
     Instantly share Elixir code, notes, and snippets.
   </h1>
 </div>
+
+<.form for={@form}>
+  <div class="justify-center px-28 w-full space-y-4 mb-10">
+    <.input field={@form[:description]} placeholder="Gist description..." autocomplete="off"/>
+    <div title="Code Snippet Div">
+      <div class="flex p-2 items-center bg-gistDark rounded-t-md border">
+        <div class="w-[300px] mb-2 ">
+          <.input field={@form[:name]} placeholder="Filename with extension..."/>
+        </div>
+      </div>
+      <textarea
+        class="w-full rounded-b-md textarea"
+        name="Gist textarea"
+        id="Gist Description"
+        placeholder="Insert code..."
+      ></textarea>
+    </div>
+    <div class="flex justify-end">
+      <.button class="create-button">Create Gist</.button>
+    </div>
+  </div>
+</.form>
