@@ -51,3 +51,8 @@
     border-color: white transparent transparent transparent;
     border-style: solid;
 }
+
+.gist-gradient {
+    background-image: linear-gradient(to bottom, #804794, #693a7a, #301a37, #010101);
+    height: 225px;
+}
