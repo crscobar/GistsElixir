@@ -2,6 +2,7 @@ defmodule ElixirGist.Gists do
   @moduledoc """
   The Gists context.
   """
+  require Logger
 
   import Ecto.Query, warn: false
   alias ElixirGist.Repo

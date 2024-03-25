@@ -4,24 +4,27 @@
   </h1>
 </div>
 
-<.form for={@form}>
+<%!-- Once this form is 'created'/submitted, an event is triggered and the cooresponding --%>
+<%!-- Elixir file (create_gist_live.ex) should have a handle_event function for 'create' --%>
+<.form for={@form} phx-submit="create" phx-change="validate">
   <div class="justify-center px-28 w-full space-y-4 mb-10">
-    <.input field={@form[:description]} placeholder="Gist description..." autocomplete="off"/>
+    <.input field={@form[:description]} placeholder="Gist description..." autocomplete="off" phx-debounce="blur"/>
     <div title="Code Snippet Div">
       <div class="flex p-2 items-center bg-gistDark rounded-t-md border">
         <div class="w-[300px] mb-2 ">
-          <.input field={@form[:name]} placeholder="Filename with extension..."/>
+          <.input field={@form[:name]} placeholder="Filename with extension..." phx-debounce="blur"/>
         </div>
       </div>
-      <textarea
-        class="w-full rounded-b-md textarea"
-        name="Gist textarea"
-        id="Gist Description"
-        placeholder="Insert code..."
-      ></textarea>
+      <%= textarea(@form, :markup_text,
+        class: "textarea w-full rounded-b-md",
+        placeholder: "Insert code...",
+        spellcheck: "false",
+        autocomplete: "off",
+        phx_debounce: "blur"
+      ) %>
     </div>
     <div class="flex justify-end">
-      <.button class="create-button">Create Gist</.button>
+      <.button class="create-button" phx-disable-with="Creating...">Create Gist</.button>
     </div>
   </div>
 </.form>
