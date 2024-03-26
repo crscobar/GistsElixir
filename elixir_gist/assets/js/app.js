@@ -98,6 +98,21 @@ Hooks.UpdateLineNumbers = {
   }
 };
 
+Hooks.CopyToClipboard = {
+  mounted() {
+    this.el.addEventListener("click", ev => {
+      const textToCopy = this.el.getAttribute("data-clipboard-gist")
+      if (textToCopy) {
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          console.log("Gist copied to clipboard")
+        }).catch(error => {
+          console.log("Failed to copy text with error: ", error)
+        })
+      }
+    })
+  }
+}
+
 let liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: {_csrf_token: csrfToken},

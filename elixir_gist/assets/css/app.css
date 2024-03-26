@@ -108,3 +108,11 @@ form input[type="text"]:focus {
 .create-button:hover {
     @apply hover:bg-gistPurp-dark text-gistDark-light border-gistDark-light;
 }
+
+.interactive-image-button img:hover {
+    filter: brightness(70%);
+}
+
+.interactive-image-button img:active {
+    transform: scale(1.2);
+}
