@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="flex w-full" id="gist-wrapper" phx-update="ignore">
-        <textarea id="gist-line-numbers" class="line-numbers rounded-bl-md" readonly>
+        <textarea id="gist-line-numbers" class="line-numbers rounded-bl-md" tabindex="-1" readonly>
           <%= "1\n" %>
         </textarea>
         <%= textarea(@form, :markup_text,
