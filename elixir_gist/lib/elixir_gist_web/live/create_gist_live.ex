@@ -24,10 +24,11 @@ defmodule ElixirGistWeb.CreateGistLive do
 
   def handle_event("create", %{"gist" => params}, socket) do
     case Gists.create_gist(socket.assigns.current_user, params) do
-      {:ok, _gist} ->
+      {:ok, gist} ->
         socket = push_event(socket, "clear-textareas", %{})
         empty_changeset = Gists.change_gist(%Gist{})
-        {:noreply, assign(socket, :form, to_form(empty_changeset))}
+        socket = assign(socket, :form, to_form(empty_changeset))
+        {:noreply, push_navigate(socket, to: ~p"/gist?#{[id: gist.id]}")}
       {:error, %Ecto.Changeset{} = error_changeset} ->
         {:noreply, assign(socket, :form, to_form(error_changeset))}
     end
