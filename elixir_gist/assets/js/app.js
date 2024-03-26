@@ -22,6 +22,7 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import hljs from "highlight.js"
+import hljsLangs from "./hljs-languages.json" assert { type: 'json' };
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
@@ -43,36 +44,7 @@ Hooks.Highlight = {
 
   getSyntaxType(name) {
     let extension = name.split(".").pop()
-    switch (extension) {
-      case "txt":
-        return "text"
-      case "json":
-        return "json"
-      case "html":
-        return "html"
-      case "heex":
-        return "html"
-      case "js":
-        return "javascrpit"
-      case "py":
-        return "python"
-      case "cpp":
-        return "c++"
-      case "c":
-        return "c"
-      case "java":
-        return "java"
-      case "rb":
-        return "ruby"
-      case "css":
-          return "css"
-      case "go":
-        return "go"
-      case "rust":
-        return "rust"
-      default:
-        return "elixir"
-    }
+    return hljsLangs["name"]
   }
 }
 
