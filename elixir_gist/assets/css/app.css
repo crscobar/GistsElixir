@@ -68,10 +68,21 @@ form input[type="text"]:focus {
 .textarea {
     @apply bg-gistDark-dark font-brand font-regular text-white text-sm border border-white h-[300px] resize-none;
     border-top: none;
+    border-left: none;
 }
 
 .textarea:focus {
-    @apply focus:outline-none focus:border-gistLav focus:ring-0;
+    @apply focus:outline-none focus:border-white focus:ring-0;
+}
+
+.line-numbers {
+    @apply border border-white font-brand font-regular text-sm text-gistDark-light bg-gistDark-dark h-[300px] w-[54px] text-right overflow-hidden resize-none;
+    border-right: none;
+    border-top: none;
+}
+
+.line-numbers:focus {
+    @apply focus:outline-none focus:border-white focus:ring-0;
 }
 
 .create-button {
