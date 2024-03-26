@@ -14,7 +14,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        gistSyntax: "#0D1117", 
+        gistSyntax: "#282C34", 
         gistDark: {
           dark: "#010101",
           DEFAULT: "#3C3B3B",

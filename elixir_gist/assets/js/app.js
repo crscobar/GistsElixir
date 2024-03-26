@@ -22,9 +22,19 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import hljs from "highlight.js"
-import hljsLangs from "./hljs-languages.json" assert { type: 'json' };
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
+
+function updateLineNumbers(val) {
+  const lineNumberText = document.querySelector("#gist-line-numbers")
+  console.log("In updateLineNumbers")
+  if (!lineNumberText) return
+
+  const lines = val.split("\n")
+  const numbers = lines.map((_, index) => index + 1).join("\n") + "\n"
+
+  return lineNumberText.value = numbers
+}
 
 let Hooks = {}
 
@@ -37,14 +47,23 @@ Hooks.Highlight = {
 
     if (codeBlock && name) {
       codeBlock.className = codeBlock.className.replace("/language-\S+/g", "")
-      codeBlock.classList.add(`language-${this.getSyntaxType(name)}`)
-      hljs.highlightElement(codeBlock)
+      let extension = name.split(".").pop()
+      console.log(hljs.getLanguage(extension))
+      codeBlock.classList.add(`language-${hljs.getLanguage(extension).name}`)
+      trimmed = this.trimCodeBlock(codeBlock)
+      hljs.highlightElement(trimmed)
+      updateLineNumbers(trimmed.textContent)
     }
   },
 
-  getSyntaxType(name) {
-    let extension = name.split(".").pop()
-    return hljsLangs["name"]
+  trimCodeBlock(codeBlock) {
+    const lines = codeBlock.textContent.split("\n")
+    if (lines.length > 2) {
+      lines.shift()
+      lines.pop()
+    }
+    codeBlock.textContent = lines.join("\n")
+    return codeBlock
   }
 }
 
@@ -53,7 +72,7 @@ Hooks.UpdateLineNumbers = {
     const lineNumberText = document.querySelector("#gist-line-numbers")
 
     this.el.addEventListener("input", () => {
-      this.updateLineNumbers()
+      updateLineNumbers(this.el.value)
     })
 
     this.el.addEventListener("scroll", () => {
@@ -75,18 +94,7 @@ Hooks.UpdateLineNumbers = {
       lineNumberText.value = "1\n"
     })
 
-    this.updateLineNumbers()
-  },
-
-  updateLineNumbers() {
-    const lineNumberText = document.querySelector("#gist-line-numbers")
-    console.log("In updateLineNumbers")
-    if (!lineNumberText) return
-
-    const lines = this.el.value.split("\n")
-    const numbers = lines.map((_, index) => index + 1).join("\n") + "\n"
-
-    return lineNumberText.value = numbers
+    updateLineNumbers(this.el.value)
   }
 };
 
