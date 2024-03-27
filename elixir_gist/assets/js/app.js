@@ -25,8 +25,8 @@ import hljs from "highlight.js"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
-function updateLineNumbers(val) {
-  const lineNumberText = document.querySelector("#gist-line-numbers")
+function updateLineNumbers(val, element_id="#line-numbers") {
+  const lineNumberText = document.querySelector(element_id)
   console.log("In updateLineNumbers")
   if (!lineNumberText) return
 
@@ -52,7 +52,7 @@ Hooks.Highlight = {
       codeBlock.classList.add(`language-${hljs.getLanguage(extension).name}`)
       trimmed = this.trimCodeBlock(codeBlock)
       hljs.highlightElement(trimmed)
-      updateLineNumbers(trimmed.textContent)
+      updateLineNumbers(trimmed.textContent, "#syntax-numbers")
     }
   },
 
@@ -69,7 +69,7 @@ Hooks.Highlight = {
 
 Hooks.UpdateLineNumbers = {
   mounted() {
-    const lineNumberText = document.querySelector("#gist-line-numbers")
+    const lineNumberText = document.querySelector("#line-numbers")
 
     this.el.addEventListener("input", () => {
       updateLineNumbers(this.el.value)
@@ -108,6 +108,19 @@ Hooks.CopyToClipboard = {
         }).catch(error => {
           console.log("Failed to copy text with error: ", error)
         })
+      }
+    })
+  }
+}
+
+Hooks.ToggleEdit = {
+  mounted() {
+    this.el.addEventListener("click", () => {
+      let edit = document.getElementById("edit-section")
+      let syntax = document.getElementById("syntax-section")
+      if (edit && syntax) {
+        edit.style.display = "block"
+        syntax.style.display = "none"
       }
     })
   }
