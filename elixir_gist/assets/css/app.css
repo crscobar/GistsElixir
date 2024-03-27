@@ -57,16 +57,32 @@
     height: 225px;
 }
 
-form input[type="text"] {
+form input[type="text"], input[type="email"], input[type="password"] {
     @apply bg-gistDark-dark font-brand font-regular text-white text-sm border-white;
 }
 
-form input[type="text"]:focus {
+form input[type="text"], input[type="email"], input[type="password"] :focus {
     @apply focus:outline-none focus:border-gistLav focus:ring-0;
 }
 
+.syntax-area {
+    @apply bg-emSyntax border text-xs border-white h-auto;
+    border-top: none;
+    border-left: none;
+}
+
+.syntax-numbers {
+    @apply border border-white font-brand py-[14px] text-sm text-gistDark-light bg-gistSyntax h-auto w-[54px] text-right overflow-hidden resize-none;
+    border-right: none;
+    border-top: none;
+}
+
+.syntax-numbers:focus {
+    @apply focus:outline-none focus:border-white focus:ring-0;
+}
+
 .textarea {
-    @apply bg-gistDark-dark font-brand font-regular text-white text-sm border border-white h-[300px] resize-none;
+    @apply bg-emDark-dark font-brand font-regular text-white text-xs border border-white h-[300px] resize-none;
     border-top: none;
     border-left: none;
 }
@@ -82,22 +98,6 @@ form input[type="text"]:focus {
 }
 
 .line-numbers:focus {
-    @apply focus:outline-none focus:border-white focus:ring-0;
-}
-
-.syntax-area {
-    @apply bg-gistSyntax border text-sm border-white h-auto;
-    border-top: none;
-    border-left: none;
-}
-
-.syntax-numbers {
-    @apply border border-white font-brand py-[14px] text-sm text-gistDark-light bg-gistSyntax h-auto w-[54px] text-right overflow-hidden resize-none;
-    border-right: none;
-    border-top: none;
-}
-
-.syntax-numbers:focus {
     @apply focus:outline-none focus:border-white focus:ring-0;
 }
 
