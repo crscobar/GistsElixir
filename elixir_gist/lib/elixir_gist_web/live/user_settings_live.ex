@@ -36,9 +36,17 @@ defmodule ElixirGistWeb.UserSettingsLive do
           for={@password_form}
           id="password_form"
           action={~p"/users/log_in?_action=password_updated"}
-          id="hidden_user_email"
-          value={@current_email}
+          method="post"
+          phx-change="validate_password"
+          phx-submit="update_password"
+          phx-trigger-action={@trigger_submit}
         >
+          <.input
+            field={@password_form[:email]}
+            type="hidden"
+            id="hidden_user_email"
+            value={@current_email}
+          />
           <.input
             field={@password_form[:password]}
             type="password"
