@@ -23,6 +23,23 @@ defmodule ElixirGist.Gists do
     Repo.all(Gist)
   end
 
+
+  @doc """
+  Returns a list of all gists user has created.
+
+  ## Examples
+
+      iex> list_gists()
+      [%Gist{}, ...]
+
+  """
+  def list_user_gists(%User{} = user) do
+    query = from(g in Gist, where: g.user_id == ^user.id)
+    ans = Repo.all(query)
+    IO.inspect(ans)
+    ans
+  end
+
   @doc """
   Gets a single gist.
 

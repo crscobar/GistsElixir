@@ -26,8 +26,10 @@ import hljs from "highlight.js"
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
 function updateLineNumbers(val, element_id="#line-numbers") {
+  // console.log(`In updateLineNumbers: ${element_id}`)
   const lineNumberText = document.querySelector(element_id)
-  console.log("In updateLineNumbers")
+  
+  console.log(lineNumberText)
   if (!lineNumberText) return
 
   const lines = val.split("\n")
@@ -40,6 +42,8 @@ let Hooks = {}
 
 Hooks.Highlight = {
   mounted() {
+    const elNum = (this.el.id).split("-")[1]
+
     let name = this.el.getAttribute("data-name")
 
     // 'pre code' HTML tags are in gist_live.html.heex
@@ -48,11 +52,11 @@ Hooks.Highlight = {
     if (codeBlock && name) {
       codeBlock.className = codeBlock.className.replace("/language-\S+/g", "")
       let extension = name.split(".").pop()
-      console.log(hljs.getLanguage(extension))
+      // console.log(hljs.getLanguage(extension))
       codeBlock.classList.add(`language-${hljs.getLanguage(extension).name}`)
       trimmed = this.trimCodeBlock(codeBlock)
       hljs.highlightElement(trimmed)
-      updateLineNumbers(trimmed.textContent, "#syntax-numbers")
+      updateLineNumbers(trimmed.textContent, `#syntax-numbers-${elNum}`)
     }
   },
 
@@ -69,6 +73,7 @@ Hooks.Highlight = {
 
 Hooks.UpdateLineNumbers = {
   mounted() {
+    // console.log("UpdateLineNumber hook")
     const lineNumberText = document.querySelector("#line-numbers")
 
     this.el.addEventListener("input", () => {
