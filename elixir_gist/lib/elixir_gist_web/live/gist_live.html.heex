@@ -3,10 +3,10 @@
     <div class="flex items-center ml-10">
       <img
         src="/images/user-image.svg"
-        class="round-image-padding w-8 h-8 mb-6"
+        class="round-image-padding w-8 h-8"
         alt="Profile Image"
       />
-      <div class="flex flex-col ml-4">
+      <div class="flex flex-col ml-4 mt-[20px]">
         <div class="font-bold text-base text-gistLav-dark">
           <%= @current_user.email %>
           <span class="text-white">/</span>
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="flex items-center mr-10">
-      <button class="flex items-center bg-gistPurp hover:bg-gistPurp-dark border-white border-[1px] text-white h-8 font-bold py-2 px-2 rounded-l-md">
+      <button class="flex items-center bg-gistPurp-dark hover:bg-gistPurp-light border-white border-[1px] text-white h-8 font-bold py-2 px-2 rounded-l-md">
         <img src="/images/BookmarkOutline.svg" alt="Save Button" /> Save
       </button>
       <div class="flex items-center bg-transparent text-white font-brand h-8 rounded-r-md border-white border-[1px] px-3">
@@ -69,7 +69,7 @@
         </button>
       </div>
     </div>
-    <div id="gist-wrapper-2" class="flex w-full">
+    <div id="gist-code-wrapper" class="flex w-full">
       <textarea id="syntax-numbers" class="syntax-numbers rounded-bl-md" readonly></textarea>
       <div
         id="highlight"
@@ -78,10 +78,9 @@
         data-name={@gist.name}
       >
         <pre><code>
-            <%= @gist.markup_text %>
+          <%= @gist.markup_text %>
         </code></pre>
       </div>
     </div>
   </div>
 </div>
-

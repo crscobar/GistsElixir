@@ -42,7 +42,7 @@ let Hooks = {}
 
 Hooks.Highlight = {
   mounted() {
-    const elNum = (this.el.id).split("-")[1]
+    const listNum = (this.el.id).split("-")[1]
 
     let name = this.el.getAttribute("data-name")
 
@@ -56,7 +56,12 @@ Hooks.Highlight = {
       codeBlock.classList.add(`language-${hljs.getLanguage(extension).name}`)
       trimmed = this.trimCodeBlock(codeBlock)
       hljs.highlightElement(trimmed)
-      updateLineNumbers(trimmed.textContent, `#syntax-numbers-${elNum}`)
+
+      if (listNum === undefined) {
+        updateLineNumbers(trimmed.textContent, "#syntax-numbers")
+      } else {
+        updateLineNumbers(trimmed.textContent, `#syntax-numbers-${listNum}`)
+      }
     }
   },
 
@@ -105,6 +110,8 @@ Hooks.UpdateLineNumbers = {
 
 Hooks.CopyToClipboard = {
   mounted() {
+    console.log("Copy")
+    console.log(this.el)
     this.el.addEventListener("click", ev => {
       const textToCopy = this.el.getAttribute("data-clipboard-gist")
       if (textToCopy) {
