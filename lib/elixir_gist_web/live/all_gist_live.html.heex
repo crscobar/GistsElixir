@@ -1,0 +1,62 @@
+<div class="gist-gradient flex flex-col items-center justify-center p-4">
+  <div class="flex justify-between w-full mb-10 px-4">
+    <div class="flex items-center ml-10">
+      <img
+        src="/images/user-image.svg"
+        class="round-image-padding w-8 h-8"
+        alt="Profile Image"
+      />
+      <div class="flex flex-col ml-4">
+        <div class="text-lg text-white font-bold">
+          All Public Gists
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center mr-10">
+      <div class="flex items-center bg-transparent text-white font-brand h-8 rounded-md border-white border-[1px] px-3">
+        Total Public Gists:
+        <%= length(@all_gists) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-white text-xl p-16 flex flex-col">
+  <div id="edit-section">
+    <%= for {g, index} <- Enum.with_index(@all_gists) do %>
+      <div id={"syntax-section-#{index}"} style="display: lock">
+        <div class="justify-center px-28 w-full mb-10">
+          <div class="flex p-2 items-center justify-between bg-gistDark rounded-t-md border">
+            <div class="w-[300px] pl-2 font-brand font-bold text-base text-gistLav-dark">
+              <%= g.name %>
+            </div>
+            <div>
+              <button
+                id={"goto-button-#{index}"}
+                class="interactive-image-button px-1"
+                type="button"
+                phx-click="redirect"
+                phx-value-id={g.id}
+              >
+                <img src="/images/link.svg" alt="Link Button" />
+              </button>
+            </div>
+          </div>
+          <div id={"gist-wrapper-#{index}"} class="flex w-full">
+            <textarea id={"syntax-numbers-#{index}"} class="syntax-numbers rounded-bl-md" readonly></textarea>
+            <div
+              id={"highlight-#{index}"}
+              class="syntax-area w-full rounded-br-md"
+              phx-hook="Highlight"
+              data-name={g.name}
+            >
+              <pre><code>
+                <%= g.markup_text %>
+              </code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

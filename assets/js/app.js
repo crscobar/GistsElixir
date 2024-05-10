@@ -43,6 +43,7 @@ let Hooks = {}
 Hooks.Highlight = {
   mounted() {
     const listNum = (this.el.id).split("-")[1]
+    console.log(listNum)
 
     let name = this.el.getAttribute("data-name")
 
@@ -52,8 +53,13 @@ Hooks.Highlight = {
     if (codeBlock && name) {
       codeBlock.className = codeBlock.className.replace("/language-\S+/g", "")
       let extension = name.split(".").pop()
-      // console.log(hljs.getLanguage(extension))
-      codeBlock.classList.add(`language-${hljs.getLanguage(extension).name}`)
+      console.log(hljs.getLanguage(extension))
+      console.log(hljs.getLanguage(extension).name)
+      langName = hljs.getLanguage(extension).name
+      if (langName === "HTML, XML") {
+        langName = "HTML"
+      }
+      codeBlock.classList.add(langName)
       trimmed = this.trimCodeBlock(codeBlock)
       hljs.highlightElement(trimmed)
 
