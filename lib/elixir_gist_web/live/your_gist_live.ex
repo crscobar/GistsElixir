@@ -1,4 +1,4 @@
-defmodule ElixirGistWeb.AllGistLive do
+defmodule ElixirGistWeb.YourGistLive do
   use ElixirGistWeb, :live_view
 
   alias ElixirGist.Gists
