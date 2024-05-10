@@ -66,7 +66,7 @@ form input[type="text"], input[type="email"], input[type="password"] :focus {
 }
 
 .syntax-area {
-    @apply bg-emSyntax border text-xs border-white h-auto;
+    @apply bg-gistSyntax border text-xs border-white h-auto;
     border-top: none;
     border-left: none;
 }
@@ -82,7 +82,7 @@ form input[type="text"], input[type="email"], input[type="password"] :focus {
 }
 
 .textarea {
-    @apply bg-emDark-dark font-brand font-regular text-white text-xs border border-white h-[300px] resize-none;
+    @apply bg-gistDark-dark font-brand font-regular text-white text-xs border border-white h-[300px] resize-none;
     border-top: none;
     border-left: none;
 }
