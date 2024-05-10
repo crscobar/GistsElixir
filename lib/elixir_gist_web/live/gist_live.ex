@@ -21,4 +21,17 @@ defmodule ElixirGistWeb.GistLive do
         {:noreply, socket}
     end
   end
+
+  def handle_event("save-gist", %{"gist_id" => id, "user_id" => user_id}, socket) do
+    IO.puts("IN HANDLE SAVE")
+    IO.puts(id)
+    case Gists.create_saved_gist(socket.assigns.current_user, %{gist_id: id, user_id: user_id}) do
+      {:ok, _gist} ->
+        socket = put_flash(socket, :info, "Gist successfully saved")
+        {:noreply, socket}
+      {:error, message} ->
+        socket = put_flash(socket, :error, message)
+        {:noreply, socket}
+    end
+  end
 end

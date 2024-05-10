@@ -19,8 +19,15 @@
       </div>
     </div>
     <div class="flex items-center mr-10">
-      <button class="flex items-center bg-gistPurp-dark hover:bg-gistPurp-light border-white border-[1px] text-white h-8 font-bold py-2 px-2 rounded-l-md">
-        <img src="/images/BookmarkOutline.svg" alt="Save Button" /> Save
+      <button 
+        class="flex items-center bg-gistPurp-dark hover:bg-gistPurp-light border-white border-[1px] text-white h-8 font-bold py-2 px-2 rounded-l-md"
+        phx-click="save-gist"
+        phx-value-gist_id={@gist.id}
+        phx-value-user_id={@current_user.id}
+      >
+        <img src="/images/BookmarkOutline.svg" alt="Save Button"> 
+          Save
+        <img />
       </button>
       <div class="flex items-center bg-transparent text-white font-brand h-8 rounded-r-md border-white border-[1px] px-3">
         0

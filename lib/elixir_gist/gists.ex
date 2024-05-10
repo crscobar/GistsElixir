@@ -29,7 +29,7 @@ defmodule ElixirGist.Gists do
 
   ## Examples
 
-      iex> list_gists()
+      iex> list_user_gists()
       [%Gist{}, ...]
 
   """
@@ -142,12 +142,28 @@ defmodule ElixirGist.Gists do
 
   ## Examples
 
-      iex> list_saved_gists()
+      iex> list_all_saved_gists()
       [%SavedGist{}, ...]
 
   """
-  def list_saved_gists do
+  def list_all_saved_gists do
     Repo.all(SavedGist)
+  end
+
+  @doc """
+  Returns a list of all gists user has created.
+
+  ## Examples
+
+      iex> list_user_saved_gists()
+      [%Gist{}, ...]
+
+  """
+  def list_user_saved_gists(%User{} = user) do
+    query = from(g in SavedGist, where: g.user_id == ^user.id, preload: [:gist])
+    saved_gist_ids = Repo.all(query)
+    IO.inspect(saved_gist_ids)
+    saved_gist_ids
   end
 
   @doc """
@@ -179,6 +195,8 @@ defmodule ElixirGist.Gists do
 
   """
   def create_saved_gist(user, attrs \\ %{}) do
+    IO.puts("IN CREATE SAVED GIST")
+    IO.inspect(attrs)
     user
     |> Ecto.build_assoc(:saved_gists)
     |> SavedGist.changeset(attrs)
