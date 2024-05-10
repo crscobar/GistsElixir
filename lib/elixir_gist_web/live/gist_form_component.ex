@@ -33,8 +33,8 @@ defmodule ElixirGistWeb.GistFormComponent do
             </div>
             <div id="gist-wrapper" class="flex w-full" phx-update="ignore">
               <textarea id="line-numbers" class="line-numbers rounded-bl-md" readonly>
-          <%= "1\n" %>
-        </textarea>
+                <%= "1\n" %>
+              </textarea>
               <%= textarea(@form, :markup_text,
                 id: "gist-textarea",
                 phx_hook: "UpdateLineNumbers",
