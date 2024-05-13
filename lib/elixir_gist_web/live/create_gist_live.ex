@@ -2,10 +2,22 @@ defmodule ElixirGistWeb.CreateGistLive do
   use ElixirGistWeb, :live_view
 
   alias ElixirGist.{Gists.Gist, Gists}
+  alias ElixirGist.Accounts.User
   alias ElixirGistWeb.GistFormComponent
 
   def mount(_params, _session, socket) do
-   {:ok, socket}
+    IO.puts("\n\nINSPECTING SOCKET")
+    IO.inspect(socket)
+    IO.inspect(socket.assigns, printable_limit: :infinity)
+    if(match?(%User{}, socket.assigns) == false) do
+      IO.puts("IN IF MATCH!!!\n\n")
+      socket =
+        socket
+        |> assign_new(:current_user, fn -> nil end)
+      {:ok, socket}
+    else
+      {:ok, socket}
+    end
   end
 
   def render(assigns) do

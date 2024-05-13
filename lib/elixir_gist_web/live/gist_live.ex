@@ -4,6 +4,9 @@ defmodule ElixirGistWeb.GistLive do
   alias ElixirGistWeb.GistFormComponent
 
   def mount(%{"id" => id}, _session, socket) do
+    IO.puts("\n\nINSPECTING SOCKET 1 GISTs")
+    IO.inspect(socket)
+    IO.inspect(socket.assigns.current_user)
     gist = Gists.get_gist!(id)
 
     {:ok, relative_time} = Timex.format(gist.updated_at, "{relative}", :relative)
