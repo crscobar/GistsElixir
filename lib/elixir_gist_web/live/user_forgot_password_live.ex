@@ -5,7 +5,7 @@ defmodule ElixirGistWeb.UserForgotPasswordLive do
 
   def render(assigns) do
     ~H"""
-    <div class="em-gradient flex flex-col items-center justify-center">
+    <div class="gist-gradient flex flex-col items-center justify-center pt-24">
       <h1 class="font-brand font-bold text-3xl text-white py-2">
         Forgot your password?
       </h1>
@@ -13,11 +13,11 @@ defmodule ElixirGistWeb.UserForgotPasswordLive do
         We'll send a password reset link to your inbox
       </h3>
     </div>
-    <div class="mx-auto max-w-sm">
+    <div class="mx-auto max-w-sm pt-10">
       <.form for={@form} id="reset_password_form" phx-submit="send_email">
         <.input field={@form[:email]} type="email" placeholder="Email" required />
         <div class="pt-6">
-          <.button phx-disable-with="Sending..." class="create_button w-full">
+          <.button phx-disable-with="Sending..." class="create-button w-full">
             Send password reset instructions
           </.button>
         </div>

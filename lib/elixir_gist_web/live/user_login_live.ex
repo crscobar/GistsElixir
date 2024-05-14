@@ -3,7 +3,7 @@ defmodule ElixirGistWeb.UserLoginLive do
 
   def render(assigns) do
     ~H"""
-    <div class="em-gradient flex flex-col items-center justify-center pt-24">
+    <div class="gist-gradient flex flex-col items-center justify-center pt-24">
       <h1 class="font-brand font-bold text-3xl text-white py-2">
         Sign in to account
       </h1>
@@ -11,14 +11,14 @@ defmodule ElixirGistWeb.UserLoginLive do
         Don't have an account?
         <.link
           navigate={~p"/users/register"}
-          class="font-semibold text-brand hover:underline text-emLavender-dark"
+          class="font-semibold text-brand hover:underline text-emLavender-dark text-gistPurp hover:text-gistPurp-light transition"
         >
           Sign up
         </.link>
         for an account now.
       </h3>
     </div>
-    <div class="mx-auto max-w-sm">
+    <div class="mx-auto max-w-sm pt-10">
       <.form for={@form} id="login_form" action={~p"/users/log_in"} phx-update="ignore">
         <.input field={@form[:email]} type="email" placeholder="Email" required />
         <.input field={@form[:password]} type="password" placeholder="Password" required />
@@ -26,12 +26,12 @@ defmodule ElixirGistWeb.UserLoginLive do
           <.input field={@form[:remember_me]} type="checkbox" label="Keep me logged in" />
           <.link
             href={~p"/users/reset_password"}
-            class="text-m text_brand text-emDark-light font-semibold hover:underline"
+            class="text-m text_brand text-gistPurp hover:text-gistPurp-light transition font-semibold hover:underline"
           >
             Forgot your password?
           </.link>
         </div>
-        <.button phx-disable-with="Signing in..." class="create_button w-full">
+        <.button phx-disable-with="Signing in..." class="create-button w-full">
           Sign in <span aria-hidden="true">→</span>
         </.button>
       </.form>

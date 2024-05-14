@@ -5,15 +5,15 @@ defmodule ElixirGistWeb.UserConfirmationLive do
 
   def render(%{live_action: :edit} = assigns) do
     ~H"""
-    <div class="em-gradient flex flex-col items-center justify-center">
+    <div class="gist-gradient flex flex-col items-center justify-center pt-24">
       <h1 class="font-brand font-bold text-3xl text-white py-2">
         Confirm Account
       </h1>
     </div>
-    <div class="mx-auto max-w-sm">
+    <div class="mx-auto max-w-sm pt-10">
       <.form for={@form} id="confirmation_form" phx-submit="confirm_account">
         <.input field={@form[:token]} type="hidden" />
-        <.button phx-disable-with="Confirming..." class="create_button w-full">
+        <.button phx-disable-with="Confirming..." class="create-button w-full">
           Confirm my account
         </.button>
       </.form>

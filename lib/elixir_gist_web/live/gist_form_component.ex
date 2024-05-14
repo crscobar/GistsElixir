@@ -19,9 +19,10 @@ defmodule ElixirGistWeb.GistFormComponent do
             placeholder="Gist description.."
             autocomplete="off"
             phx-debounce="blur"
+            class="bg-gistDark-light"
           />
           <div>
-            <div class="flex p-2 items-center bg-emDark rounded-t-md border">
+            <div class="flex p-2 items-center bg-gistDark-light rounded-t-md border">
               <div class="w-[300px] mb-2">
                 <.input
                   field={@form[:name]}
@@ -49,14 +50,14 @@ defmodule ElixirGistWeb.GistFormComponent do
           <%= if @current_user do %>
             <div class="flex justify-end">
               <%= if @id == :new do %>
-                <.button class="create_button" phx-disable-with="Creating...">Create gist</.button>
+                <.button class="create-button" phx-disable-with="Creating...">Create gist</.button>
               <% else %>
-                <.button class="create_button" phx-disable-with="Updating...">Update gist</.button>
+                <.button class="create-button" phx-disable-with="Updating...">Update gist</.button>
               <% end %>
             </div>
           <% else %>
             <div class="flex justify-end">
-              <.button disabled>Log In To Create Gists</.button>
+              <.button class="create-button" disabled>Log In To Create Gists</.button>
             </div>
           <% end %>
         </div>

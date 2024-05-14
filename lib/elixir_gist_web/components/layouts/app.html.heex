@@ -5,34 +5,34 @@
       <img src={~p"/images/gist-logo.svg"} alt="Logo" class="h-8 w-auto" />
     </a>
     <a href={~p"/"} class="mr-6">
-      <div class="text-white font-brand font-bold text-3xl">Gist</div>
+      <div class="text-white font-brand font-bold text-3xl hover:text-gistLav transition">Gist</div>
     </a>
-    <div>
+    <div class="content-center">
       <%= if @current_user do %>
         <input
           type="text"
-          class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-dark placeholder-gistDark-light text-white font-brand font-regular text-sm mr-5 border-white"
+          class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-light placeholder-white/50 text-white font-brand font-regular text-sm mr-5 border-white/50 transition"
           placeholder="Search Gists..."
         />
       <% else %>
         <input
           type="text"
-          class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-dark placeholder-gistDark-light text-white font-brand font-regular text-sm mr-5 border-white"
+          class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-light placeholder-white/50 text-white font-brand font-regular text-sm mr-5 border-white/50 transition"
           placeholder="Log In To Search..."
         />
       <% end %>
       <a
-        class="mt-2 mr-2 text-white text-[1rem] font-brand font-bold hover:text-gistLav transition"
+        class="flex-row text-white text-[1.2rem] font-brand font-bold hover:text-gistLav transition"
         href={~p"/gist/all"}
       >
-        All gists
+        All Gists
       </a>
     </div>
   </div>
 
-  <div class="relative">
+  <div class="relative content-center translate-y-1">
     <button
-      class="img-down-arrow"
+      class="img-down-arrow scale-110"
       type="button"
       id="user-menu-button"
       phx-click={ElixirGistWeb.Layouts.App.toggle_dropdown_menu()}
@@ -41,14 +41,14 @@
     </button>
     <div
       id="dropdown_menu"
-      class="dropdown-menu-arrow absolute right-0 mt-2 py-2 w-48 bg-gistDark rounded-lg shadow-xl border border-white"
+      class="dropdown-menu-arrow absolute right-0 mt-2 py-1 w-48 bg-gistDark rounded-lg shadow-xl border border-white/50"
       hidden="true"
       phx-click-away={ElixirGistWeb.Layouts.App.toggle_dropdown_menu()}
     >
       <%= if @current_user do %>
         <.link
           href={~p"/users/settings"}
-          class="menu-item border-b border-white border-opacity-50"
+          class="menu-item border-b border-white/50"
           role="menuitem"
           tabindex="-1"
           method="get"
@@ -68,7 +68,7 @@
         </.link>
         <.link
           href={~p"/gist/saved"}
-          class="menu-item border-b border-white border-opacity-50"
+          class="menu-item border-b border-white/50"
           role="menuitem"
           tabindex="-1"
           method="get"
@@ -89,7 +89,7 @@
       <% else %>
         <.link
           href={~p"/users/log_in"}
-          class="menu-item border-b border-white border-opacity-50"
+          class="menu-item border-b border-white/50"
           role="menuitem"
           tabindex="-1"
           method="get"

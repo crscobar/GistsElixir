@@ -5,7 +5,7 @@ defmodule ElixirGistWeb.UserSettingsLive do
 
   def render(assigns) do
     ~H"""
-    <div class="em-gradient flex flex-col items-center justify-center">
+    <div class="gist-gradient flex flex-col items-center justify-center pt-24">
       <h1 class="font-brand font-bold text-3xl text-white py-2">
         Account Settings
       </h1>
@@ -13,7 +13,7 @@ defmodule ElixirGistWeb.UserSettingsLive do
         Manage your account email address and password settings
       </h3>
     </div>
-    <div class="mx-auto max-w-sm">
+    <div class="mx-auto max-w-sm pt-10">
       <div>
         <.form for={@email_form} id="email_form" phx-submit="update_email" phx-change="validate_email">
           <.input field={@email_form[:email]} type="email" placeholder="Email" required />
@@ -27,7 +27,7 @@ defmodule ElixirGistWeb.UserSettingsLive do
             required
           />
           <div class="py-6">
-            <.button phx-disable-with="Changing..." class="create_button">Change Email</.button>
+            <.button phx-disable-with="Changing..." class="create-button">Change Email</.button>
           </div>
         </.form>
       </div>
@@ -68,7 +68,7 @@ defmodule ElixirGistWeb.UserSettingsLive do
             required
           />
           <div class="py-6">
-            <.button phx-disable-with="Changing..." class="create_button">Change Password</.button>
+            <.button phx-disable-with="Changing..." class="create-button">Change Password</.button>
           </div>
         </.form>
       </div>

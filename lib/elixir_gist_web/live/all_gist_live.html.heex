@@ -21,12 +21,12 @@
   </div>
 </div>
 
-<div class="text-white text-xl p-16 flex flex-col">
-  <div id="edit-section">
+<div class="text-white text-xl p-16">
+  <div id="edit-section" class="flex flex-col w-full justify-center">
     <%= for {g, index} <- Enum.with_index(@all_gists) do %>
-      <div id={"syntax-section-#{index}"} style="display: lock">
-        <div class="justify-center px-28 w-full mb-10">
-          <div class="flex p-2 items-center justify-between bg-gistDark rounded-t-md border">
+      <div id={"syntax-section-#{index}"} style="display: lock" class="max-w-[60rem]">
+        <div class="px-28 w-full mb-10">
+          <div class="flex p-2 justify-between bg-gistDark rounded-t-md border">
             <div class="w-[300px] pl-2 font-brand font-bold text-base text-gistLav-dark">
               <%= g.name %>
             </div>

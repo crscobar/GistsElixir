@@ -8,6 +8,7 @@
     src: url("/fonts/WorkSans-Regular.ttf");
     font-weight: normal;
     font-style: normal;
+    text: white;
 }
 
 @font-face {
@@ -72,7 +73,7 @@ form input[type="text"], input[type="email"], input[type="password"] :focus {
 }
 
 .syntax-numbers {
-    @apply border border-white font-brand py-[14px] text-sm text-gistDark-light bg-gistSyntax h-auto w-[54px] text-right overflow-hidden resize-none;
+    @apply border border-white font-brand py-[12px] text-sm text-white/50 bg-gistSyntax h-auto text-right overflow-hidden resize-none min-w-12 max-w-12 ;
     border-right: none;
     border-top: none;
 }
@@ -82,7 +83,7 @@ form input[type="text"], input[type="email"], input[type="password"] :focus {
 }
 
 .textarea {
-    @apply bg-gistDark-dark font-brand font-regular text-white text-xs border border-white h-[300px] resize-none;
+    @apply bg-gistDark font-brand font-regular text-white text-sm border border-white h-80;
     border-top: none;
     border-left: none;
 }
@@ -92,7 +93,7 @@ form input[type="text"], input[type="email"], input[type="password"] :focus {
 }
 
 .line-numbers {
-    @apply border border-white font-brand font-regular text-sm text-gistDark-light bg-gistDark-dark h-[300px] w-[54px] text-right overflow-hidden resize-none;
+    @apply border border-white font-brand font-regular text-sm text-white bg-gistDark h-auto w-12 text-right overflow-hidden resize-none;
     border-right: none;
     border-top: none;
 }
@@ -102,11 +103,11 @@ form input[type="text"], input[type="email"], input[type="password"] :focus {
 }
 
 .create-button {
-    @apply bg-gistPurp-light border border-white font-brand font-regular text-black text-base;
+    @apply bg-gistPurp-dark font-brand border border-gistPurp-dark font-regular text-white/70 text-base transition;
 }
 
 .create-button:hover {
-    @apply hover:bg-gistPurp-dark text-gistDark-light border-gistDark-light;
+    @apply hover:bg-gistPurp text-white/90 border border-white/80 transition;
 }
 
 .interactive-image-button img:hover {
