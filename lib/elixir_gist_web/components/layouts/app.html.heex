@@ -8,11 +8,19 @@
       <div class="text-white font-brand font-bold text-3xl">Gist</div>
     </a>
     <div>
-      <input
-        type="text"
-        class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-dark placeholder-gistDark-light text-white font-brand font-regular text-sm mr-5 border-white"
-        placeholder="Search..."
-      />
+      <%= if @current_user do %>
+        <input
+          type="text"
+          class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-dark placeholder-gistDark-light text-white font-brand font-regular text-sm mr-5 border-white"
+          placeholder="Search Gists..."
+        />
+      <% else %>
+        <input
+          type="text"
+          class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-dark placeholder-gistDark-light text-white font-brand font-regular text-sm mr-5 border-white"
+          placeholder="Log In To Search..."
+        />
+      <% end %>
       <a
         class="mt-2 mr-2 text-white text-[1rem] font-brand font-bold hover:text-gistLav transition"
         href={~p"/gist/all"}
