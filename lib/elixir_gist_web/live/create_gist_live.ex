@@ -4,18 +4,8 @@ defmodule ElixirGistWeb.CreateGistLive do
   alias ElixirGist.{Gists.Gist, Gists}
   alias ElixirGistWeb.GistFormComponent
 
-  def mount(_params, session, socket) do
-    IO.puts("\n\nINSPECTING SOCKET")
-    IO.inspect(socket)
-    IO.inspect(socket.assigns, printable_limit: :infinity)
-    IO.inspect(session)
-    if(Map.has_key?(session, "user_token") == false) do
-      IO.puts("IN IF MATCH!!!\n\n")
-      socket = assign_new(socket, :current_user, fn -> nil end)
-      {:ok, socket}
-    else
-      {:ok, socket}
-    end
+  def mount(_params, _session, socket) do
+    {:ok, socket}
   end
 
   def render(assigns) do
