@@ -3,7 +3,7 @@ defmodule ElixirGistWeb.UserLoginLive do
 
   def render(assigns) do
     ~H"""
-    <div class="em-gradient flex flex-col items-center justify-center">
+    <div class="em-gradient flex flex-col items-center justify-center pt-24">
       <h1 class="font-brand font-bold text-3xl text-white py-2">
         Sign in to account
       </h1>

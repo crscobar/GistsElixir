@@ -46,13 +46,19 @@ defmodule ElixirGistWeb.GistFormComponent do
               ) %>
             </div>
           </div>
-          <div class="flex justify-end">
-            <%= if @id == :new do %>
-              <.button class="create_button" phx-disable-with="Creating...">Create gist</.button>
-            <% else %>
-              <.button class="create_button" phx-disable-with="Updating...">Update gist</.button>
-            <% end %>
-          </div>
+          <%= if @current_user do %>
+            <div class="flex justify-end">
+              <%= if @id == :new do %>
+                <.button class="create_button" phx-disable-with="Creating...">Create gist</.button>
+              <% else %>
+                <.button class="create_button" phx-disable-with="Updating...">Update gist</.button>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="flex justify-end">
+              <.button disabled>Log In To Create Gists</.button>
+            </div>
+          <% end %>
         </div>
       </.form>
     </div>
