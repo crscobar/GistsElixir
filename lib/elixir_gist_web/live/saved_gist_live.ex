@@ -8,4 +8,8 @@ defmodule ElixirGistWeb.SavedGistLive do
 
     {:ok, assign(socket, user_saved_gists: user_saved_gists)}
   end
+
+  def handle_event("go-to-gist", %{"id" => id}, socket) do
+    {:noreply, push_navigate(socket, to: ~p"/gist?id=#{id}")}
+  end
 end

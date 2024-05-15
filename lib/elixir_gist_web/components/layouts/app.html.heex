@@ -5,7 +5,9 @@
       <img src={~p"/images/gist-logo.svg"} alt="Logo" class="h-8 w-auto" />
     </a>
     <a href={~p"/"} class="mr-6">
-      <div class="text-white font-brand font-bold text-3xl hover:text-gistLav transition">Gist</div>
+      <div class="text-white font-brand font-bold text-3xl hover:text-gistLav transition">
+        Gist
+      </div>
     </a>
     <div class="content-center">
       <%= if @current_user do %>
@@ -37,7 +39,7 @@
       id="user-menu-button"
       phx-click={ElixirGistWeb.Layouts.App.toggle_dropdown_menu()}
     >
-      <img src="/images/user-image.svg" alt="Profile Image" class="round-image-padding w-8 h-8" />
+      <img src="/images/user-hand.svg" alt="Profile Image" class="round-image-padding w-8 h-8" />
     </button>
     <div
       id="dropdown_menu"

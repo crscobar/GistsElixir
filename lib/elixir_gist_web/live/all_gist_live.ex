@@ -10,7 +10,7 @@ defmodule ElixirGistWeb.AllGistLive do
     {:ok, assign(socket, all_gists: all_gists)}
   end
 
-  def handle_event("redirect", %{"id" => id}, socket) do
+  def handle_event("go-to-gist", %{"id" => id}, socket) do
     {:noreply, push_navigate(socket, to: ~p"/gist?id=#{id}")}
   end
 end

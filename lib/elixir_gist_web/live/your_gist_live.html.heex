@@ -1,11 +1,7 @@
 <div class="gist-gradient flex flex-col items-center justify-center p-4">
   <div class="flex justify-between w-full mb-10 px-4">
     <div class="flex items-center ml-10">
-      <img
-        src="/images/user-image.svg"
-        class="round-image-padding w-8 h-8"
-        alt="Profile Image"
-      />
+      <img src="/images/user-hand.svg" class="round-image-padding w-8 h-8" alt="Profile Image" />
       <div class="flex flex-col ml-4">
         <div class="font-bold text-base text-gistLav-dark">
           <%= @current_user.email %>
@@ -18,8 +14,7 @@
     </div>
     <div class="flex items-center mr-10">
       <div class="flex items-center bg-transparent text-white font-brand h-8 rounded-md border-white border-[1px] px-3">
-        Total Gists:
-        <%= length(@user_gists) %>
+        Total Gists: <%= length(@user_gists) %>
       </div>
     </div>
   </div>

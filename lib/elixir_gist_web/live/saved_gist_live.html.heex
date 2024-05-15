@@ -1,8 +1,8 @@
 <div class="gist-gradient flex flex-col items-center justify-center p-4">
-  <div class="flex justify-between w-full mb-10 px-4">
+  <div class="flex justify-between  w-3/4 mt-24 max-w-[68rem] min-w-[30rem] shrink-0">
     <div class="flex items-center ml-10">
       <img
-        src="/images/user-image.svg"
+        src="/images/user-hand.svg"
         class="round-image-padding w-8 h-8"
         alt="Profile Image"
       />
@@ -25,39 +25,37 @@
   </div>
 </div>
 
-<div class="text-white text-xl p-16 flex flex-col">
-  <div id="edit-section">
+<div class="text-white text-xl p-16 flex justify-center">
+  <div id="gists-section" class="w-full min-w-[30rem] max-w-[75rem] justify-center mt-10 px-16">
     <%= for {saved, index} <- Enum.with_index(@user_saved_gists) do %>
-      <div id={"syntax-section-#{index}"} style="display: lock">
-        <div class="justify-center px-28 w-full mb-10">
-          <div class="flex p-2 items-center justify-between bg-gistDark rounded-t-md border">
-            <div class="w-[300px] pl-2 font-brand font-bold text-base text-gistLav-dark">
-               <%= saved.gist.name %>
-            </div>
-            <div>
-              <button
-                id={"goto-button-#{index}"}
-                class="interactive-image-button px-1"
-                type="button"
-                phx-click="redirect"
-                phx-value-id={saved.gist.id}
-              >
-                <img src="/images/link.svg" alt="Link Button" />
-              </button>
-            </div>
+      <div id={"syntax-section-#{index}"} style="display: lock" class="px-28 w-full mb-10">
+        <div class="flex p-2 justify-between bg-gistDark rounded-t-md border min-w-[11rem]">
+          <div class="pl-2 font-brand font-bold text-base text-gistLav-dark">
+              <%= saved.gist.name %>
           </div>
-          <div id={"gist-wrapper-#{index}"} class="flex w-full">
-            <textarea id={"syntax-numbers-#{index}"} class="syntax-numbers rounded-bl-md" readonly></textarea>
-            <div
-              id={"highlight-#{index}"}
-              class="syntax-area w-full rounded-br-md"
-              phx-hook="Highlight"
-              data-name={saved.gist.name}
+          <div>
+            <button
+              id={"goto-button-#{index}"}
+              class="interactive-image-button px-1"
+              type="button"
+              phx-click="go-to-gist"
+              phx-value-id={saved.gist.id}
             >
-              <pre><code>
-                <%= saved.gist.markup_text %>
-              </code></pre>
-            </div>
+              <img src="/images/link.svg" alt="Link Button" />
+            </button>
+          </div>
+        </div>
+        <div id={"gist-wrapper-#{index}"} class="flex max-w-[75rem]">
+          <textarea id={"syntax-numbers-#{index}"} class="syntax-numbers rounded-bl-md" readonly></textarea>
+          <div
+            id={"highlight-#{index}"}
+            class="syntax-area w-full rounded-br-md border-white max-w-[58rem]"
+            phx-hook="Highlight"
+            data-name={saved.gist.name}
+          >
+            <pre><code>
+              <%= saved.gist.markup_text %>
+            </code></pre>
           </div>
         </div>
       </div>
