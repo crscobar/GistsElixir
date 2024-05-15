@@ -42,8 +42,9 @@ let Hooks = {}
 
 Hooks.Highlight = {
   mounted() {
+    // console.log("\n\nMOUNTED HIGHLIGHT")
     const listNum = (this.el.id).split("-")[1]
-    console.log(listNum)
+    // console.log(listNum)
 
     let name = this.el.getAttribute("data-name")
 
@@ -53,8 +54,37 @@ Hooks.Highlight = {
     if (codeBlock && name) {
       codeBlock.className = codeBlock.className.replace("/language-\S+/g", "")
       let extension = name.split(".").pop()
-      console.log(hljs.getLanguage(extension))
-      console.log(hljs.getLanguage(extension).name)
+      // console.log(hljs.getLanguage(extension))
+      // console.log(hljs.getLanguage(extension).name)
+      langName = hljs.getLanguage(extension).name
+      if (langName === "HTML, XML") {
+        langName = "HTML"
+      }
+      codeBlock.classList.add(langName)
+      trimmed = this.trimCodeBlock(codeBlock)
+      hljs.highlightElement(trimmed)
+
+      if (listNum === undefined) {
+        updateLineNumbers(trimmed.textContent, "#syntax-numbers")
+      } else {
+        updateLineNumbers(trimmed.textContent, `#syntax-numbers-${listNum}`)
+      }
+    }
+  },
+
+  updated() {
+    // console.log("\n\nUPDATED HILI")
+    const listNum = (this.el.id).split("-")[1]
+    let name = this.el.getAttribute("data-name")
+
+    // 'pre code' HTML tags are in gist_live.html.heex
+    let codeBlock = this.el.querySelector("pre code")
+
+    if (codeBlock && name) {
+      codeBlock.className = codeBlock.className.replace("/language-\S+/g", "")
+      let extension = name.split(".").pop()
+      // console.log(hljs.getLanguage(extension))
+      // console.log(hljs.getLanguage(extension).name)
       langName = hljs.getLanguage(extension).name
       if (langName === "HTML, XML") {
         langName = "HTML"

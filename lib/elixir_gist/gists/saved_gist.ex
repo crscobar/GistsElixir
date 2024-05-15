@@ -17,5 +17,6 @@ defmodule ElixirGist.Gists.SavedGist do
     saved_gist
     |> cast(attrs, [:user_id, :gist_id])
     |> validate_required([:user_id, :gist_id])
+    |> unsafe_validate_unique(:gist_id, ElixirGist.Repo)
   end
 end

@@ -10,9 +10,9 @@ defmodule ElixirGistWeb.GistFormComponent do
 
   def render(assigns) do
     ~H"""
-    <div>
-      <.form for={@form} phx-submit="create" phx-change="validate" phx-target={@myself}>
-        <div class="justify-center px-28 w-full space-y-4 mb-10">
+    <div class="flex justify-center pt-10">
+      <.form for={@form} phx-submit="create" phx-change="validate" phx-target={@myself} class="w-full max-w-[75rem] justify-center">
+        <div class="px-28 w-full space-y-4 mb-10">
           <%= hidden_input(@form, :id, value: @id) %>
           <.input
             field={@form[:description]}
@@ -22,7 +22,7 @@ defmodule ElixirGistWeb.GistFormComponent do
             class="bg-gistDark-light"
           />
           <div>
-            <div class="flex p-2 items-center bg-gistDark-light rounded-t-md border">
+            <div class="flex p-2 bg-gistDark-light rounded-t-md border">
               <div class="w-[300px] mb-2">
                 <.input
                   field={@form[:name]}

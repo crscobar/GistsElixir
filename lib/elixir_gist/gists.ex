@@ -5,6 +5,7 @@ defmodule ElixirGist.Gists do
   require Logger
 
   import Ecto.Query, warn: false
+  alias ElixirGist.Gists
   alias ElixirGist.Repo
 
   alias ElixirGist.Gists.Gist
@@ -180,7 +181,7 @@ defmodule ElixirGist.Gists do
       ** (Ecto.NoResultsError)
 
   """
-  def get_saved_gist!(id), do: Repo.get!(SavedGist, id)
+  def get_saved_gist!(gist_id), do: Repo.get_by(SavedGist, gist_id: gist_id)
 
   @doc """
   Creates a saved_gist.
@@ -195,8 +196,6 @@ defmodule ElixirGist.Gists do
 
   """
   def create_saved_gist(user, attrs \\ %{}) do
-    IO.puts("IN CREATE SAVED GIST")
-    IO.inspect(attrs)
     user
     |> Ecto.build_assoc(:saved_gists)
     |> SavedGist.changeset(attrs)
@@ -233,8 +232,10 @@ defmodule ElixirGist.Gists do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_saved_gist(%SavedGist{} = saved_gist) do
-    Repo.delete(saved_gist)
+  def delete_saved_gist(attrs) do
+    gist = Gists.get_saved_gist!(attrs.gist_id)
+    gist
+    |> Repo.delete()
   end
 
   @doc """

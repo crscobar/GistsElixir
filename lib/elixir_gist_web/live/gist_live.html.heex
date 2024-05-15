@@ -1,15 +1,28 @@
 <div class="gist-gradient flex flex-col items-center justify-center p-4">
-  <div class="flex justify-between w-full mb-10 px-4">
+  <div class="flex justify-between w-3/4 mt-24 max-w-[68rem] min-w-[30rem] shrink-0">
     <div class="flex items-center ml-10">
-      <img
-        src="/images/user-image.svg"
-        class="round-image-padding w-8 h-8"
-        alt="Profile Image"
-      />
+      <%= if (@gist.user_id == @current_user.id) do %>
+        <img
+          src="/images/user-image.svg"
+          class="round-image-padding w-8 h-8"
+          alt="Profile Image"
+        />
+      <% else %>
+        <img
+          src="/images/incognito-user.svg"
+          class="round-image-padding w-8 h-8"
+          alt="Incognito User Image"
+        />
+      <% end %>
       <div class="flex flex-col ml-4 mt-[20px]">
         <div class="font-bold text-base text-gistLav-dark">
-          <%= @current_user.email %>
-          <span class="text-white">/</span>
+          <%= if (@gist.user_id == @current_user.id) do %>
+            <%= @current_user.email %>
+            <span class="text-white">/</span>
+          <% else %>
+            <span class="font-bold text-base text-gistLav-dark">Anonymous User</span>
+            <span class="text-white">/</span>
+          <% end %>
           <%= @gist.name %>
         </div>
         <div class="text-lg text-white font-bold">
@@ -20,37 +33,47 @@
         </p>
       </div>
     </div>
-    <div class="flex items-center mr-10">
-      <button 
-        class="flex items-center bg-gistPurp-dark hover:bg-gistPurp-light border-white border-[1px] text-white h-8 font-bold py-2 px-2 rounded-l-md"
-        phx-click="save-gist"
-        phx-value-gist_id={@gist.id}
-        phx-value-user_id={@current_user.id}
-      >
-        <img src="/images/BookmarkOutline.svg" alt="Save Button"> 
-          Save
-        <img />
-      </button>
-      <div class="flex items-center bg-transparent text-white font-brand h-8 rounded-r-md border-white border-[1px] px-3">
-        0
-      </div>
+    <div class="group flex items-center mr-10">
+      <%= if Gists.get_saved_gist!(@gist.id) do %>
+        <button 
+          class="flex items-center group-hover:bg-gistPurp-light border-white border-[1px] text-white h-8 font-bold py-2 px-2 rounded-md"
+          phx-click="unsave-gist"
+          phx-value-gist_id={@gist.id}
+        >
+          <img src="/images/BookmarkFilled.svg" alt="Saved Button"> 
+            Saved
+          <img />       
+        </button>
+      <% else %>
+        <button 
+          class="flex items-center group-hover:bg-gistPurp-light border-white border-[1px] text-white h-8 font-bold py-2 px-2 rounded-md"
+          phx-click="save-gist"
+          phx-value-gist_id={@gist.id}
+          phx-value-user_id={@current_user.id}
+        >
+          <img src="/images/BookmarkOutline.svg" alt="Save Button"> 
+            Save
+          <img />       
+        </button>
+      <% end %>
+      
     </div>
   </div>
 </div>
 
-<div id="edit-section" style="display: none">
+<%!-- <div id="edit-section" style="display: none">
   <.live_component 
     module={GistFormComponent} 
     id={@gist.id} 
     current_user={@current_user} 
     form={to_form(Gists.change_gist(@gist))} 
   />
-</div>
+</div> --%>
 
-<div id="syntax-section" style="display: lock">
-  <div class="justify-center px-28 w-full mb-10">
-    <div class="flex p-2 items-center justify-between bg-gistDark rounded-t-md border">
-      <div class="w-[300px] pl-2 font-brand font-bold text-base text-gistLav-dark">
+<div id="syntax-section" style="display: lock" class="flex justify-center mt-10 px-16">
+  <div class="justify-center px-28 w-full min-w-[30rem] max-w-[75rem]">
+    <div class="flex p-2 justify-between bg-gistDark rounded-t-md border min-w-[19rem] flex-grow-0">
+      <div class="pl-2 font-brand font-bold text-base text-gistLav-dark ">
         <%= @gist.name %>
       </div>
       <div>

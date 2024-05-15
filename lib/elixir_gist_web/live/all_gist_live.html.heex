@@ -1,19 +1,15 @@
 <div class="gist-gradient flex flex-col items-center justify-center p-4">
-  <div class="flex justify-between w-full mb-10 px-4">
+  <div class="flex justify-between w-3/4 mt-24 max-w-[68rem] min-w-[30rem] shrink-0">
     <div class="flex items-center ml-10">
-      <img
-        src="/images/user-image.svg"
-        class="round-image-padding w-8 h-8"
-        alt="Profile Image"
-      />
-      <div class="flex flex-col ml-4">
-        <div class="text-lg text-white font-bold">
+      <div class="shrink-0 ml-4">
+        <div class="shrink-0 text-lg text-white font-bold">
           All Public Gists
         </div>
       </div>
     </div>
-    <div class="flex items-center mr-10">
-      <div class="flex items-center bg-transparent text-white font-brand h-8 rounded-md border-white border-[1px] px-3">
+    <div class="grow min-w-[5rem]" />
+    <div class="shrink-0 flex items-center mr-10">
+      <div class="flex items-center bg-transparent text-white font-brand h-8 rounded-md border-white border-[1px] px-3 -translate-x-3">
         Total Public Gists:
         <%= length(@all_gists) %>
       </div>
@@ -21,42 +17,38 @@
   </div>
 </div>
 
-<div class="text-white text-xl p-16">
-  <div id="edit-section" class="flex flex-col w-full justify-center">
-    <%= for {g, index} <- Enum.with_index(@all_gists) do %>
-      <div id={"syntax-section-#{index}"} style="display: lock" class="max-w-[60rem]">
-        <div class="px-28 w-full mb-10">
-          <div class="flex p-2 justify-between bg-gistDark rounded-t-md border">
-            <div class="w-[300px] pl-2 font-brand font-bold text-base text-gistLav-dark">
-              <%= g.name %>
-            </div>
-            <div>
-              <button
-                id={"goto-button-#{index}"}
-                class="interactive-image-button px-1"
-                type="button"
-                phx-click="redirect"
-                phx-value-id={g.id}
-              >
-                <img src="/images/link.svg" alt="Link Button" />
-              </button>
-            </div>
-          </div>
-          <div id={"gist-wrapper-#{index}"} class="flex w-full">
-            <textarea id={"syntax-numbers-#{index}"} class="syntax-numbers rounded-bl-md" readonly></textarea>
-            <div
-              id={"highlight-#{index}"}
-              class="syntax-area w-full rounded-br-md"
-              phx-hook="Highlight"
-              data-name={g.name}
-            >
-              <pre><code>
-                <%= g.markup_text %>
-              </code></pre>
-            </div>
-          </div>
+<div id="gists-section" class="w-full min-w-[30rem] max-w-[75rem] justify-center mt-10 px-16">
+  <%= for {g, index} <- Enum.with_index(@all_gists) do %>
+    <div id={"syntax-section-#{index}"} style="display: lock" class="px-28 w-full mb-10">
+      <div class="flex p-2 justify-between bg-gistDark rounded-t-md border min-w-[11rem]">
+        <div class="pl-2 font-brand font-bold text-base text-gistLav-dark">
+          <%= g.name %>
+        </div>
+        <div>
+          <button
+            id={"goto-button-#{index}"}
+            class="interactive-image-button px-1"
+            type="button"
+            phx-click="redirect"
+            phx-value-id={g.id}
+          >
+            <img src="/images/link.svg" alt="Link Button" />
+          </button>
         </div>
       </div>
-    <% end %>
-  </div>
+      <div id={"gist-wrapper-#{index}"} class="flex max-w-[75rem]">
+        <textarea id={"syntax-numbers-#{index}"} class="syntax-numbers rounded-bl-md" readonly></textarea>
+        <div
+          id={"highlight-#{index}"}
+          class="syntax-area w-full rounded-br-md border-white max-w-[58rem]"
+          phx-hook="Highlight"
+          data-name={g.name}
+        >
+          <pre><code>
+            <%= g.markup_text %>
+          </code></pre>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
