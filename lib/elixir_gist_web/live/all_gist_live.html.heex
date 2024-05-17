@@ -1,14 +1,14 @@
 <div class="gist-gradient flex flex-col items-center justify-center p-4">
-  <div class="flex justify-between w-3/4 mt-24 max-w-[68rem] min-w-[30rem] shrink-0">
-    <div class="flex items-center ml-10">
+  <div class="flex justify-between w-full mt-24 max-w-[70rem] min-w-[30rem] shrink-0">
+    <div class="flex items-center">
       <div class="shrink-0 ml-4">
-        <div class="shrink-0 text-lg text-white font-bold">
+        <div class="shrink-0 text-2xl text-white font-bold">
           All Public Gists
         </div>
       </div>
     </div>
     <div class="grow min-w-[5rem]" />
-    <div class="shrink-0 flex items-center mr-10">
+    <div class="shrink-0 flex items-center">
       <div class="flex items-center bg-transparent text-white font-brand h-8 rounded-md border-white border-[1px] px-3 -translate-x-3">
         Total Public Gists:
         <%= length(@all_gists) %>
@@ -17,31 +17,43 @@
   </div>
 </div>
 
-<div class="text-white text-xl p-16 flex justify-center">
-  <div id="gists-section" class="w-full min-w-[30rem] max-w-[75rem] justify-center mt-10 px-16">
+<div class="2xl:container 2xl:mx-auto transition">
+  <div id="gists-section" class="w-full items-center mt-10 px-2">
     <%= for {g, index} <- Enum.with_index(@all_gists) do %>
-      <div id={"syntax-section-#{index}"} style="display: lock" class="px-28 w-full mb-10">
-        <div class="flex p-2 justify-between bg-gistDark rounded-t-md border min-w-[11rem]">
-          <div class="pl-2 font-brand font-bold text-base text-gistLav-dark">
-            <%= g.name %>
-          </div>
-          <div>
-            <button
-              id={"goto-button-#{index}"}
-              class="interactive-image-button px-1"
-              type="button"
-              phx-click="go-to-gist"
-              phx-value-id={g.id}
-            >
-              <img src="/images/link.svg" alt="Link Button" />
-            </button>
+      <div id={"syntax-section-#{index}"} style="display: lock" class="w-full mb-10 mr-auto ml-auto max-w-[70rem] px-4">
+        <div class="flex pb-4 w-fit">
+          <%= if (g.user_id == @current_user.id) do %>
+            <img src="/images/user-hand.svg" class="round-image-padding w-10 h-10" alt="Profile Image" />
+          <% else %>
+            <img
+              src="/images/anon-user.svg"
+              class="round-image-padding w-10 h-10"
+              alt="anon User Image"
+            />
+          <% end %>
+          <div class="justify-start mr-auto ml-4">
+            <%= if (g.user_id == @current_user.id) do %>
+              <span class="font-normal text-base text-gistLav-dark"><%= @current_user.email %></span>
+              <span class="text-white">/</span>
+            <% else %>
+              <span class="font-normal text-base text-gistLav-dark">Anonymous User</span>
+              <span class="text-white">/</span>
+            <% end %>
+            <a href={~p"/gist?id=#{g.id}"} class="font-bold text-bol text-gistLav-dark hover:text-gistLav-light transition"><%= g.name %></a>
+            <div class="text-sm text-white/70 font-normal">
+              <%= "Updated #{get_relative_time(g) |> elem(1)}" %>
+            </div>
+            <div class="text-sm text-white/70 font-normal">
+              <%= g.description %>
+            </div>
           </div>
         </div>
-        <div id={"gist-wrapper-#{index}"} class="flex max-w-[75rem]">
-          <textarea id={"syntax-numbers-#{index}"} class="syntax-numbers rounded-bl-md" readonly></textarea>
+        
+        <div id={"gist-wrapper-#{index}"} class="group flex min-w-[20rem] justify-center  ">
+          <textarea id={"syntax-numbers-#{index}"} class="syntax-numbers rounded-l-md" readonly />
           <div
             id={"highlight-#{index}"}
-            class="syntax-area w-full rounded-br-md border-white max-w-[58rem]"
+            class="syntax-area w-full rounded-r-md border-white max-w-[68rem] overflow-x-auto"
             phx-hook="Highlight"
             data-name={g.name}
           >

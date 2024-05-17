@@ -29,7 +29,7 @@ function updateLineNumbers(val, element_id="#line-numbers") {
   // console.log(`In updateLineNumbers: ${element_id}`)
   const lineNumberText = document.querySelector(element_id)
   
-  console.log(lineNumberText)
+  // console.log(lineNumberText)
   if (!lineNumberText) return
 
   const lines = val.split("\n")
@@ -107,7 +107,8 @@ Hooks.Highlight = {
       lines.shift()
       lines.pop()
     }
-    codeBlock.textContent = lines.join("\n")
+    codeBlock.textContent = lines.join("\n").replace(/\n+$/, "")
+
     return codeBlock
   }
 }
