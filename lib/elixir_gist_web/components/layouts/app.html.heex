@@ -1,4 +1,4 @@
-<header class="flex justify-between items-center sm:px-6 px-3 py-3 bg-gistDark">
+<header class="flex justify-between items-center sm:px-4 px-3 py-3 bg-gistDark">
   <div class="flex relative">
     <%!-- Anchor tag↓ that takes us back to "/" page when the logo is clicked  --%>
     <a href={~p"/"}>
@@ -21,7 +21,6 @@
           type="text"
           class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-light placeholder-white/50 text-white font-brand font-regular text-sm sm:mr-6 mr-2 border-white/50 transition"
           placeholder="Log In To Search..."
-          size="3"
         />
       <% end %>
       <a
@@ -33,7 +32,7 @@
     </div>
   </div>
 
-  <div class="relative content-center translate-y-1">
+  <div class="relative content-center translate-y-1 sm:px-4">
     <button
       class="img-down-arrow scale-110"
       type="button"
@@ -121,13 +120,13 @@
   <%= @inner_content %>
 </main>
 
-<footer class="h-[120px] w-full flex justify-center text-white px-16 py-20 font-brand font-regular text-xs">
-  <div class="w-full px-10">
-    <div class="border-t-[1px] border-white w-full"></div>
-    <div class="flex items-center space-x-2 py-6">
-      <img src="/images/em-logo.svg" alt="Elixir Mentor Logo" class="h-10 w-10" />
-      <p>©2024 ChrisEsco Tech</p>
-      <div class="text-gistLav-dark px-8 space-x-2">
+<footer class="w-full flex justify-center text-white px-10 py-8 font-brand font-regular text-xs  bottom-4">
+  <div class="w-full justify-center items-center">
+    <div class="border-t-[1px] border-white/50 w-full pb-4"></div>
+    <div class="flex items-center justify-center space-x-2">
+      <img src="/images/gist-logo.svg" alt="Elixir Mentor Logo" class="h-8 w-8" />
+      <p class="text-white/80 font-bold text-md">© 2024 ChrisEsco Tech</p>
+      <div class="text-gistLav font-bold text-md px-8 space-x-2">
         <a href={~p"/about"} class="hover:underline">About</a>
       </div>
     </div>
