@@ -1,11 +1,11 @@
-<header class="flex justify-between items-center px-6 py-3 bg-gistDark">
+<header class="flex justify-between items-center sm:px-6 px-3 py-3 bg-gistDark">
   <div class="flex relative">
     <%!-- Anchor tag↓ that takes us back to "/" page when the logo is clicked  --%>
     <a href={~p"/"}>
       <img src={~p"/images/gist-logo.svg"} alt="Logo" class="h-8 w-auto" />
     </a>
-    <a href={~p"/"} class="mr-6">
-      <div class="text-white font-brand font-bold text-3xl hover:text-gistLav transition">
+    <a href={~p"/"} class="sm:mr-6 mr-2">
+      <div class="text-white font-brand font-bold text-2xl sm:text-3xl hover:text-gistLav transition">
         Gist
       </div>
     </a>
@@ -13,18 +13,19 @@
       <%= if @current_user do %>
         <input
           type="text"
-          class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-light placeholder-white/50 text-white font-brand font-regular text-sm mr-5 border-white/50 transition"
+          class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-light placeholder-white/50 text-white font-brand font-regular text-sm sm:mr-6 mr-2 border-white/50 transition sm:w-48 w-28"
           placeholder="Search Gists..."
         />
       <% else %>
         <input
           type="text"
-          class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-light placeholder-white/50 text-white font-brand font-regular text-sm mr-5 border-white/50 transition"
+          class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-light placeholder-white/50 text-white font-brand font-regular text-sm sm:mr-6 mr-2 border-white/50 transition"
           placeholder="Log In To Search..."
+          size="3"
         />
       <% end %>
       <a
-        class="flex-row text-white text-[1.2rem] font-brand font-bold hover:text-gistLav transition"
+        class="flex-row text-white sm:text-[1.2rem] font-brand font-bold hover:text-gistLav transition"
         href={~p"/gist/all"}
       >
         All Gists

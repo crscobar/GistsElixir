@@ -1,16 +1,13 @@
 <div class="gist-gradient flex flex-col items-center justify-center p-4">
-  <div class="flex justify-between w-full mt-24 max-w-[70rem] min-w-[30rem] shrink-0">
-    <div class="flex items-center">
-      <div class="shrink-0 ml-4">
-        <div class="shrink-0 text-2xl text-white font-bold">
-          All Public Gists
-        </div>
+  <div class="flex flex-shrink justify-between w-full mt-24 max-w-[70rem] transition-all">
+    <div class="flex items-center shrink-0 ml-4">
+      <div class="shrink-0 text-xl sm:text-2xl text-white font-bold">
+        All Public Gists
       </div>
     </div>
-    <div class="grow min-w-[5rem]" />
-    <div class="shrink-0 flex items-center">
-      <div class="flex items-center bg-transparent text-white font-brand h-8 rounded-md border-white border-[1px] px-3 -translate-x-3">
-        Total Public Gists:
+    <div class="flex items-center shrink-0">
+      <div class="flex items-center bg-transparent text-white font-brand text-sm sm:text-lg h-8 rounded-md border-white border-[1px] px-2 -translate-x-3 transition">
+        Total Gists:
         <%= length(@all_gists) %>
       </div>
     </div>
@@ -28,7 +25,7 @@
             <img
               src="/images/anon-user.svg"
               class="round-image-padding w-10 h-10"
-              alt="anon User Image"
+              alt="Anon User Image"
             />
           <% end %>
           <div class="justify-start mr-auto ml-4">
