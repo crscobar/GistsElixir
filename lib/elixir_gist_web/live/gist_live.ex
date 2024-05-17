@@ -1,6 +1,7 @@
 defmodule ElixirGistWeb.GistLive do
   use ElixirGistWeb, :live_view
   alias ElixirGist.Gists
+  alias ElixirGistWeb.GistFormComponent
 
   def mount(%{"id" => id}, _session, socket) do
     gist = Gists.get_gist!(id)
@@ -57,5 +58,9 @@ defmodule ElixirGistWeb.GistLive do
         socket = put_flash(socket, :error, error_msg)
         {:noreply, push_navigate(socket, to: ~p"/gist?id=#{gist_id}")}
     end
+  end
+
+  def handle_event("cancel", %{"gist_id" => gist_id}, socket) do
+    {:noreply, push_navigate(socket, to: ~p"/gist?id=#{gist_id}")}
   end
 end

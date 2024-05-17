@@ -10,9 +10,15 @@ defmodule ElixirGistWeb.GistFormComponent do
 
   def render(assigns) do
     ~H"""
-    <div class="flex justify-center pt-10">
-      <.form for={@form} phx-submit="create" phx-change="validate" phx-target={@myself} class="w-full max-w-[75rem] justify-center">
-        <div class="px-28 w-full space-y-4 mb-10">
+    <div class="flex justify-center pt-6 px-2">
+      <.form
+        for={@form}
+        phx-submit="create"
+        phx-change="validate"
+        phx-target={@myself}
+        class="w-full max-w-[70rem] justify-center"
+      >
+        <div class="px-4 w-full space-y-4 mb-10">
           <%= hidden_input(@form, :id, value: @id) %>
           <.input
             field={@form[:description]}
@@ -22,11 +28,11 @@ defmodule ElixirGistWeb.GistFormComponent do
             class="bg-gistDark-light"
           />
           <div>
-            <div class="flex p-2 bg-gistDark-light rounded-t-md border">
+            <div class="flex bg-gistDark-light rounded-t-md border">
               <div class="w-[300px] mb-2">
                 <.input
                   field={@form[:name]}
-                  placeholder="Filename including extension..."
+                  placeholder="Filename with extension..."
                   autocomplete="off"
                   phx-debounce="blur"
                 />
@@ -39,7 +45,7 @@ defmodule ElixirGistWeb.GistFormComponent do
               <%= textarea(@form, :markup_text,
                 id: "gist-textarea",
                 phx_hook: "UpdateLineNumbers",
-                class: "textarea w-full rounded-br-md",
+                class: "textarea w-full rounded-br-md h-96",
                 placeholder: "Insert code...",
                 spellcheck: "false",
                 autocomplete: "off",
@@ -48,16 +54,23 @@ defmodule ElixirGistWeb.GistFormComponent do
             </div>
           </div>
           <%= if @current_user do %>
-            <div class="flex justify-end">
+            <div class="flex flex-row justify-end">
               <%= if @id == :new do %>
-                <.button class="create-button" phx-disable-with="Creating...">Create gist</.button>
+                <div class="flex justify-end">
+                  <.button class="gist-button" phx-disable-with="Creating...">Create gist</.button>
+                </div>
               <% else %>
-                <.button class="create-button" phx-disable-with="Updating...">Update gist</.button>
+                <div class="flex-row justify-end mr-4">
+                  <.button class="gist-button" type="button" phx-click="cancel" phx-value-gist_id={@id}>Cancel</.button>
+                </div>
+                <div class="flex-row justify-end">
+                  <.button class="gist-button" phx-disable-with="Updating...">Update</.button>
+                </div>
               <% end %>
             </div>
           <% else %>
             <div class="flex justify-end">
-              <.button class="create-button" disabled>Log In To Create Gists</.button>
+              <.button class="gist-button" disabled>Log In To Create Gists</.button>
             </div>
           <% end %>
         </div>
@@ -82,6 +95,7 @@ defmodule ElixirGistWeb.GistFormComponent do
       update_gist(params, socket)
     end
   end
+
 
   defp create_gist(params, socket) do
     case Gists.create_gist(socket.assigns.current_user, params) do
