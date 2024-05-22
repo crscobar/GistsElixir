@@ -2,6 +2,7 @@ defmodule ElixirGistWeb.AllGistLive do
   use ElixirGistWeb, :live_view
 
   alias ElixirGist.Gists
+  import ElixirGist.Helpers
 
   # TODO: Add pagination for all gists
   def mount(_params, _session, socket) do
@@ -12,10 +13,5 @@ defmodule ElixirGistWeb.AllGistLive do
 
   def handle_event("go-to-gist", %{"id" => id}, socket) do
     {:noreply, push_navigate(socket, to: ~p"/gist?id=#{id}")}
-  end
-
-  def get_relative_time(gist) do
-    relative_time = Timex.format(gist.updated_at, "{relative}", :relative)
-    relative_time
   end
 end
