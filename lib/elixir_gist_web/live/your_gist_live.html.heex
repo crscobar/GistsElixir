@@ -5,7 +5,7 @@
   <div id="gists-section" class="w-full items-center mt-10 px-2">
     <%= for {g, index} <- Enum.with_index(@user_gists) do %>
       <div id={"syntax-section-#{index}"} style="display: lock" class="w-full mb-10 mr-auto ml-auto max-w-[70rem] px-4">
-        <div id="gist-metadata"class="flex pb-4 w-fit">
+        <div id={"gist-metadata-#{index}"} class="flex pb-4 w-fit">
           <%= if (g.user_id == @current_user.id) do %>
             <img src="/images/user-hand.svg" class="round-image-padding w-10 h-10 " alt="Profile Image" />
           <% else %>
