@@ -22,15 +22,11 @@ defmodule ElixirGistWeb.UserRegistrationLive do
       </h3>
     </div>
     <div class="mx-auto max-w-sm pt-10">
-      <.form
-        for={@form}
-        id="registration_form"
-        phx-submit="save"
-      >
+      <.form for={@form} id="registration_form" phx-submit="save">
         <.input field={@form[:email]} type="email" placeholder="Email" required />
         <.input field={@form[:password]} type="password" placeholder="Password" required />
         <div class="py-6">
-          <.button phx-disable-with="Creating account..." class="create-button w-full">
+          <.button phx-disable-with="Creating account..." class="gist-button w-full">
             Create an account
           </.button>
         </div>

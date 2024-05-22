@@ -17,7 +17,7 @@ defmodule ElixirGistWeb.UserForgotPasswordLive do
       <.form for={@form} id="reset_password_form" phx-submit="send_email">
         <.input field={@form[:email]} type="email" placeholder="Email" required />
         <div class="pt-6">
-          <.button phx-disable-with="Sending..." class="create-button w-full">
+          <.button phx-disable-with="Sending..." class="gist-button w-full">
             Send password reset instructions
           </.button>
         </div>

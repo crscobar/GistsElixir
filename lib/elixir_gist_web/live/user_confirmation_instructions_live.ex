@@ -17,7 +17,7 @@ defmodule ElixirGistWeb.UserConfirmationInstructionsLive do
       <.form for={@form} id="resend_confirmation_form" phx-submit="send_instructions">
         <.input field={@form[:email]} type="email" placeholder="Email" required />
         <div class="pt-6">
-          <.button phx-disable-with="Sending..." class="create-button w-full">
+          <.button phx-disable-with="Sending..." class="gist-button w-full">
             Resend confirmation instructions
           </.button>
         </div>

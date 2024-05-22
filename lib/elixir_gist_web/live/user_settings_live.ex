@@ -27,7 +27,7 @@ defmodule ElixirGistWeb.UserSettingsLive do
             required
           />
           <div class="py-6">
-            <.button phx-disable-with="Changing..." class="create-button">Change Email</.button>
+            <.button phx-disable-with="Changing..." class="gist-button">Change Email</.button>
           </div>
         </.form>
       </div>
@@ -68,7 +68,7 @@ defmodule ElixirGistWeb.UserSettingsLive do
             required
           />
           <div class="py-6">
-            <.button phx-disable-with="Changing..." class="create-button">Change Password</.button>
+            <.button phx-disable-with="Changing..." class="gist-button">Change Password</.button>
           </div>
         </.form>
       </div>

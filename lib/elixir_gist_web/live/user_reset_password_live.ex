@@ -23,7 +23,7 @@ defmodule ElixirGistWeb.UserResetPasswordLive do
           required
         />
         <div class="pt-6">
-          <.button phx-disable-with="Resetting..." class="create-button w-full">
+          <.button phx-disable-with="Resetting..." class="gist-button w-full">
             Reset Password
           </.button>
         </div>

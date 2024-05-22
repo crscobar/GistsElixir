@@ -31,7 +31,7 @@ defmodule ElixirGistWeb.UserLoginLive do
             Forgot your password?
           </.link>
         </div>
-        <.button phx-disable-with="Signing in..." class="create-button w-full">
+        <.button phx-disable-with="Signing in..." class="gist-button w-full">
           Sign in <span aria-hidden="true">→</span>
         </.button>
       </.form>

@@ -13,7 +13,7 @@ defmodule ElixirGistWeb.UserConfirmationLive do
     <div class="mx-auto max-w-sm pt-10">
       <.form for={@form} id="confirmation_form" phx-submit="confirm_account">
         <.input field={@form[:token]} type="hidden" />
-        <.button phx-disable-with="Confirming..." class="create-button w-full">
+        <.button phx-disable-with="Confirming..." class="gist-button w-full">
           Confirm my account
         </.button>
       </.form>
