@@ -1,5 +1,5 @@
-<div class="gist-gradient flex flex-col items-center justify-center p-4">
-  <div class="flex flex-shrink justify-between w-full mt-24 max-w-[70rem] transition-all">
+<div class="gist-gradient flex flex-col items-center justify-center p-2">
+  <div class="flex  justify-between w-full mt-24 max-w-[70rem] transition-all">
     <div class="flex items-center shrink-0 ml-4">
       <div class="shrink-0 text-xl sm:text-2xl text-white font-bold">
         All Public Gists
@@ -18,9 +18,9 @@
   <div id="gists-section" class="w-full items-center mt-10 px-2">
     <%= for {g, index} <- Enum.with_index(@all_gists) do %>
       <div id={"syntax-section-#{index}"} style="display: lock" class="w-full mb-10 mr-auto ml-auto max-w-[70rem] px-4">
-        <div class="flex pb-4 w-fit">
+        <div id="gist-metadata"class="flex pb-4 w-fit">
           <%= if (g.user_id == @current_user.id) do %>
-            <img src="/images/user-hand.svg" class="round-image-padding w-10 h-10" alt="Profile Image" />
+            <img src="/images/user-hand.svg" class="round-image-padding w-10 h-10 " alt="Profile Image" />
           <% else %>
             <img
               src="/images/anon-user.svg"

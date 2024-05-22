@@ -29,7 +29,7 @@ defmodule ElixirGistWeb.GistFormComponent do
           />
           <div>
             <div class="flex bg-gistDark-light rounded-t-md border">
-              <div class="w-[300px] mb-2">
+              <div class="w-[300px] mb-2 ml-2">
                 <.input
                   field={@form[:name]}
                   placeholder="Filename with extension..."
@@ -38,7 +38,7 @@ defmodule ElixirGistWeb.GistFormComponent do
                 />
               </div>
             </div>
-            <div id="gist-wrapper" class="flex w-full" phx-update="ignore">
+            <div id="gist-form-wrapper" class="flex w-full" phx-update="ignore">
               <textarea id="line-numbers" class="line-numbers rounded-bl-md" readonly>
                 <%= "1\n" %>
               </textarea>

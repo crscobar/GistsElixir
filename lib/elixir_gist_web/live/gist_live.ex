@@ -63,4 +63,25 @@ defmodule ElixirGistWeb.GistLive do
   def handle_event("cancel", %{"gist_id" => gist_id}, socket) do
     {:noreply, push_navigate(socket, to: ~p"/gist?id=#{gist_id}")}
   end
+
+  def handle_info("show_end", socket) do
+    IO.puts('show end')
+    {:noreply, socket}
+  end
+
+  def toggle_copied_popup do
+    JS.show(
+      to: "#copied_popup",
+      transition: {"transition ease-out duration-500", "transform opacity-0", "transform opacity-100"},
+      time: 500
+    )
+  end
+
+  def toggle_copied_popdown do
+    JS.hide(
+      to: "#copied_popup",
+      transition: {"transition ease-in duartion-350", "transform opacity-100", "transform opacity-0"},
+      time: 500
+    )
+  end
 end

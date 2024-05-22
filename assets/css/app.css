@@ -32,6 +32,18 @@
     border-color: transparent transparent white transparent;
 }
 
+.popup-menu-arrow::before {
+    content: "";
+    position: absolute;
+    top: 25px;
+    right: 12px;
+    left: calc(95% - 12px);
+    border-width: 0 5px 5px 5px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+    rotate: 180deg;
+}
+
 .menu-item {
     @apply block px-4 py-2 text-sm text-white font-brand font-regular
 }
@@ -85,7 +97,7 @@ form input[type="text"], input[type="email"], input[type="password"] :focus {
 }
 
 .textarea {
-    @apply bg-gistDark font-brand font-regular text-white text-sm border border-white h-80;
+    @apply bg-gistDark font-brand font-regular text-white text-sm border border-white;
     border-top: none;
     border-left: none;
 }
@@ -104,11 +116,11 @@ form input[type="text"], input[type="email"], input[type="password"] :focus {
     @apply focus:outline-none focus:border-white focus:ring-0;
 }
 
-.create-button {
+.gist-button {
     @apply bg-gistPurp-dark font-brand border border-gistPurp-dark font-regular text-white/70 text-base transition;
 }
 
-.create-button:hover {
+.gist-button:hover {
     @apply hover:bg-gistPurp text-white/90 border border-white/80 transition;
 }
 
