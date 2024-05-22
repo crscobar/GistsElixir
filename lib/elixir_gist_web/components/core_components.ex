@@ -16,6 +16,7 @@ defmodule ElixirGistWeb.CoreComponents do
   """
   use Phoenix.Component
 
+  alias Postgrex.Extensions.Numeric
   alias Phoenix.LiveView.JS
   import ElixirGistWeb.Gettext
 
@@ -595,6 +596,33 @@ defmodule ElixirGistWeb.CoreComponents do
   def icon(%{name: "hero-" <> _} = assigns) do
     ~H"""
     <span class={[@name, @class]} />
+    """
+  end
+
+  @doc """
+
+  ## Examples
+
+      <.gists_header type="Saved Gists" num_gists={length(@user_saved_gists)}/>
+      <.gists_header type="All Gists" num_gists={length(@all_gists)}/>
+  """
+  attr :type, :string, required: true
+  attr :num_gists, :integer, required: true
+
+  def gists_header(assigns) do
+    ~H"""
+    <div class="gist-gradient flex flex-col items-center justify-center p-2">
+      <div class="flex  justify-between w-full mt-24 max-w-[70rem] transition-all">
+        <div class="flex items-center shrink-0 ml-4">
+          <div class="shrink-0 text-xl sm:text-2xl text-white font-bold">
+            <%= @type %> Gists
+          </div>
+          <div class="items-center text-center bg-transparent text-white font-brand text-sm w-6 h-6 p-[1.5px] rounded-full border-white border-[1px] translate-x-2 translate-y-[2px]">
+            <%= @num_gists %>
+          </div>
+        </div>
+      </div>
+    </div>
     """
   end
 
