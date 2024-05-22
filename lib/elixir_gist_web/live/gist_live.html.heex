@@ -1,5 +1,5 @@
 <div class="gist-gradient flex flex-col items-center justify-center p-2">
-  <div class="flex justify-between w-full mt-24 max-w-[70rem] px-4 transition-all shrink-0">
+  <div class="flex flex-wrap flex-row justify-between w-full mt-24 max-w-[70rem] px-4 transition-all shrink-0">
     <div id="gist-metadata"class="flex pb-4 w-fit">
       <%= if (@gist.user_id == @current_user.id) do %>
         <img src="/images/user-hand.svg" class="round-image-padding w-10 h-10" alt="Profile Image" />
@@ -18,7 +18,7 @@
           <span class="font-normal text-base text-gistLav-dark">Anonymous User</span>
           <span class="text-white">/</span>
         <% end %>
-        <a href={~p"/gist?id=#{@gist.id}"} class="font-bold text-bol text-gistLav-dark hover:text-gistLav-light transition"><%= @gist.name %></a>
+        <span class="font-normal text-gistLav-dark"><%= @gist.name %></span>
         <div class="text-sm text-white/70 font-normal">
           <%= "Updated #{@gist.relative}" %>
         </div>
@@ -53,58 +53,6 @@
   </div>
 </div>
 
-<%!-- <div id="syntax-section" style="display: lock" class="2xl:container 2xl:mx-auto transition w-full mb-10 mr-auto ml-auto max-w-[70rem] px-4">
-  <div class="justify-center px-28 w-full min-w-[30rem] max-w-[75rem]">
-    <div class="flex p-2 justify-between bg-gistDark rounded-t-md border min-w-[19rem] flex-grow-0">
-      <div class="pl-2 font-brand font-bold text-base text-gistLav-dark ">
-        <%= @gist.name %>
-      </div>
-      <div>
-        <%= if @current_user.id == @gist.user_id do %>
-          <button
-            class="interactive-image-button px-1"
-            type="button"
-            phx-click="delete"
-            phx-value-id={@gist.id}
-          >
-            <img src="/images/delete.svg" alt="Delete Button" />
-          </button>
-          <button
-            id="edit-button"
-            class="interactive-image-button px-1"
-            type="button"
-            phx-hook="ToggleEdit"
-          >
-            <img src="/images/edit.svg" alt="Edit Button" />
-          </button>
-        <% end %>
-        <button
-          id="copy-button"
-          class="interactive-image-button px-1"
-          type="button"
-          phx-hook="CopyToClipboard"
-          data-clipboard-gist={@gist.markup_text}
-        >
-          <img src="/images/copy.svg" alt="Copy Button" />
-        </button>
-      </div>
-    </div>
-    <div id="gist-code-wrapper" class="flex w-full">
-      <textarea id="syntax-numbers" class="syntax-numbers rounded-bl-md" readonly></textarea>
-      <div
-        id="highlight"
-        class="syntax-area w-full rounded-br-md"
-        phx-hook="Highlight"
-        data-name={@gist.name}
-      >
-        <pre><code>
-          <%= @gist.markup_text %>
-        </code></pre>
-      </div>
-    </div>
-  </div>
-</div> --%>
-
 <div id="edit-section" style="display: none">
   <.live_component
     module={GistFormComponent}
@@ -117,11 +65,11 @@
 <div id={"syntax-section"} class="2xl:container 2xl:mx-auto transition">
   <div id="gists-section" class="w-full items-center mt-10 px-2">
     <div style="display: lock" class="w-full mb-10 mr-auto ml-auto max-w-[70rem] px-4">
-      <div class="flex p-2 justify-between bg-gistDark rounded-t-md border min-w-[19rem] flex-grow-0">
+      <div class="flex flex-wrap flex-row p-2 justify-between bg-gistDark rounded-t-md border flex-grow-0">
         <div id="gist-name-header" class="pl-2 font-brand font-bold text-base text-gistLav-dark ">
           <%= @gist.name %>
         </div>
-        <div>
+        <div class="group flex flex-shrink-0 pl-2">
           <%= if @current_user.id == @gist.user_id do %>
             <button
               class="interactive-image-button px-1"
