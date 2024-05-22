@@ -1,9 +1,9 @@
-<.gists_header type="All" num_gists={length(@all_gists)} />
+<.gists_header type="All" num_gists={@all_gists.total_entries} />
 
 
 <div class="2xl:container 2xl:mx-auto transition">
   <div id="gists-section" class="w-full items-center mt-10 px-2">
-    <%= for {g, index} <- Enum.with_index(@all_gists) do %>
+    <%= for {g, index} <- Enum.with_index(@all_gists.entries) do %>
       <div id={"syntax-section-#{index}"} style="display: lock" class="w-full mb-10 mr-auto ml-auto max-w-[70rem] px-4">
         <div id={"gist-metadata-#{index}"} class="flex pb-4 w-fit">
           <%= if (g.user_id == @current_user.id) do %>
@@ -49,5 +49,27 @@
       </div>
     <% end %>
   </div>
+
+  <nav class="items-center justify-center p-6">
+    <ul class="items-center justify-center flex my-2">
+      <li class="">
+        <a class={"px-2 py-2 " <> if @all_gists.page_number <= 1, do: "pointer-events-none text-gray-400", else: "text-gistLav-dark hover:text-gistLav-light transition"} href="#" phx-click="nav" phx-value-page={@all_gists.page_number - 1}>
+          Previous
+        </a>
+      </li>
+      <%= for idx <-  Enum.to_list(1..@all_gists.total_pages) do %>
+        <li class="">
+          <a class={"px-2 py-2 " <> if @all_gists.page_number == idx, do: "pointer-events-none text-gray-400", else: "text-gistLav-dark hover:text-gistLav-light transition"} href="#" phx-click="nav" phx-value-page={idx}>
+            <%= idx %>
+          </a>
+        </li>
+      <% end %>
+      <li class="">
+        <a class={"px-2 py-2 " <> if @all_gists.page_number >= @all_gists.total_pages, do: "pointer-events-none text-gray-400", else: "text-gistLav-dark hover:text-gistLav-light transition"} href="#" phx-click="nav" phx-value-page={@all_gists.page_number + 1}>
+          Next
+        </a>
+      </li>
+    </ul>
+  </nav>
 </div>
 

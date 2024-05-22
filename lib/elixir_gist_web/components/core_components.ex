@@ -16,7 +16,6 @@ defmodule ElixirGistWeb.CoreComponents do
   """
   use Phoenix.Component
 
-  alias Postgrex.Extensions.Numeric
   alias Phoenix.LiveView.JS
   import ElixirGistWeb.Gettext
 

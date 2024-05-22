@@ -61,7 +61,7 @@ defmodule ElixirGist.MixProject do
       {:bandit, "~> 1.2"},
       {:phoenix_html_helpers, "~> 1.0"},
       {:timex, "~> 3.7"},
-      {:paginator, "~> 1.2.0"}
+      {:scrivener_ecto, "~> 2.0"}
     ]
   end
 

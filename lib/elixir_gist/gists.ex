@@ -20,8 +20,12 @@ defmodule ElixirGist.Gists do
       [%Gist{}, ...]
 
   """
-  def list_gists do
-    Repo.all(Gist)
+  def list_gists(page) do
+    IO.puts("PAGE #{page}")
+    gists =
+      Gist
+      |> ElixirGist.Repo.paginate(page: page, page_size: 10)
+    gists
   end
 
 
