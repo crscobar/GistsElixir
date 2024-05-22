@@ -1,4 +1,4 @@
-<div class="gist-gradient flex flex-col items-center justify-center p-4">
+<%!-- <div class="gist-gradient flex flex-col items-center justify-center p-4">
   <div class="flex justify-between w-full mb-10 px-4">
     <div class="flex items-center ml-10">
       <img src="/images/user-hand.svg" class="round-image-padding w-8 h-8" alt="Profile Image" />
@@ -53,6 +53,72 @@
                 <%= g.markup_text %>
               </code></pre>
             </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div> --%>
+
+<div class="gist-gradient flex flex-col items-center justify-center p-2">
+  <div class="flex  justify-between w-full mt-24 max-w-[70rem] transition-all">
+    <div class="flex items-center shrink-0 ml-4">
+      <div class="shrink-0 text-xl sm:text-2xl text-white font-bold">
+        Your Gists
+      </div>
+    </div>
+    <div class="flex items-center shrink-0">
+      <div class="flex items-center bg-transparent text-white font-brand text-sm sm:text-lg h-8 rounded-md border-white border-[1px] px-2 -translate-x-3 transition">
+        Total Gists:
+        <%= length(@user_gists) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="2xl:container 2xl:mx-auto transition">
+  <div id="gists-section" class="w-full items-center mt-10 px-2">
+    <%= for {g, index} <- Enum.with_index(@user_gists) do %>
+      <div id={"syntax-section-#{index}"} style="display: lock" class="w-full mb-10 mr-auto ml-auto max-w-[70rem] px-4">
+        <div id="gist-metadata"class="flex pb-4 w-fit">
+          <%= if (g.user_id == @current_user.id) do %>
+            <img src="/images/user-hand.svg" class="round-image-padding w-10 h-10 " alt="Profile Image" />
+          <% else %>
+            <img
+              src="/images/anon-user.svg"
+              class="round-image-padding w-10 h-10"
+              alt="Anon User Image"
+            />
+          <% end %>
+          <div class="justify-start mr-auto ml-4">
+            <%= if (g.user_id == @current_user.id) do %>
+              <span class="font-normal text-base text-gistLav-dark"><%= @current_user.email %></span>
+              <span class="text-white">/</span>
+            <% else %>
+              <span class="font-normal text-base text-gistLav-dark">Anonymous User</span>
+              <span class="text-white">/</span>
+            <% end %>
+            <a href={~p"/gist?id=#{g.id}"} class="font-bold text-bol text-gistLav-dark hover:text-gistLav-light transition"><%= g.name %></a>
+            <div class="text-sm text-white/70 font-normal">
+              <%= "Updated #{get_relative_time(g) |> elem(1)}" %>
+            </div>
+            <div class="text-sm text-white/70 font-normal">
+              <%= g.description %>
+            </div>
+          </div>
+        </div>
+        
+        <div id={"gist-wrapper-#{index}"} class="group flex justify-center">
+          <textarea id={"syntax-numbers-#{index}"} class="syntax-numbers rounded-l-md" readonly />
+          <div
+            id={"highlight-#{index}"}
+            class="syntax-area w-full rounded-r-md border-white max-w-[68rem] overflow-x-auto"
+            phx-hook="Highlight"
+            data-name={g.name}
+          >
+            <pre><code>
+              <%= g.markup_text %>
+            </code></pre>
           </div>
         </div>
       </div>

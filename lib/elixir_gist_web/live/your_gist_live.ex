@@ -2,6 +2,7 @@ defmodule ElixirGistWeb.YourGistLive do
   use ElixirGistWeb, :live_view
 
   alias ElixirGist.Gists
+  import ElixirGist.Helpers
 
   def mount(_params, _session, socket) do
     user_gists = Gists.list_user_gists(socket.assigns.current_user)
