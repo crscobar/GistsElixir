@@ -625,6 +625,43 @@ defmodule ElixirGistWeb.CoreComponents do
     """
   end
 
+  @doc """
+
+  ## Examples
+
+      <.pagination_footer type="Saved Gists" num_gists={length(@user_saved_gists)}/>
+      <.pagination_footer type="All Gists" num_gists={length(@all_gists)}/>
+  """
+
+  attr :page_number, :integer, required: true
+  attr :total_pages, :integer, required: true
+
+  def pagination_footer(assigns) do
+    ~H"""
+    <nav class="items-center justify-center p-6">
+      <ul class="items-center justify-center flex my-2">
+        <li class="">
+          <a class={"px-2 py-2 " <> if @page_number <= 1, do: "pointer-events-none text-gray-400", else: "text-gistLav-dark hover:text-gistLav-light transition"} href="#" phx-click="nav" phx-value-page={@page_number - 1}>
+            Previous
+          </a>
+        </li>
+        <%= for idx <-  Enum.to_list(1..@total_pages) do %>
+          <li class="">
+            <a class={"px-2 py-2 " <> if @page_number == idx, do: "pointer-events-none text-gray-400", else: "text-gistLav-dark hover:text-gistLav-light transition"} href="#" phx-click="nav" phx-value-page={idx}>
+              <%= idx %>
+            </a>
+          </li>
+        <% end %>
+        <li class="">
+          <a class={"px-2 py-2 " <> if @page_number >= @total_pages, do: "pointer-events-none text-gray-400", else: "text-gistLav-dark hover:text-gistLav-light transition"} href="#" phx-click="nav" phx-value-page={@page_number + 1}>
+            Next
+          </a>
+        </li>
+      </ul>
+    </nav>
+    """
+  end
+
   ## JS Commands
 
   def show(js \\ %JS{}, selector) do

@@ -6,12 +6,7 @@ defmodule ElixirGistWeb.AllGistLive do
 
   # TODO: Add pagination for all gists
   def mount(params, _session, socket) do
-    IO.puts("all gists111111")
-    IO.inspect(params)
-    IO.puts(params["page"])
-
     all_gists = Gists.list_gists(params["page"])
-    IO.puts("all gists?????")
 
     {:ok, assign(socket, all_gists: all_gists)}
   end
