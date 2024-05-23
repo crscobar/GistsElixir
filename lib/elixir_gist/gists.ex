@@ -21,7 +21,6 @@ defmodule ElixirGist.Gists do
 
   """
   def list_gists(page) do
-    IO.puts("PAGE #{page}")
     gists =
       Gist
       |> ElixirGist.Repo.paginate(page: page, page_size: 10)
@@ -39,7 +38,6 @@ defmodule ElixirGist.Gists do
 
   """
   def list_user_gists(%User{} = user, page) do
-    IO.puts("PAGE #{page}")
     user_gists =
       Gist
       |> where([g], g.user_id == ^user.id)
@@ -167,19 +165,12 @@ defmodule ElixirGist.Gists do
 
   """
   def list_user_saved_gists(%User{} = user, page) do
-    # query = from(g in SavedGist, where: g.user_id == ^user.id, preload: [:gist])
-    # saved_gist_ids = Repo.all(query)
-    # IO.inspect(saved_gist_ids)
-    # saved_gist_ids
-
-    IO.puts("PAGE #{page}")
     saved_gist_ids =
       SavedGist
       |> where([g], g.user_id == ^user.id)
       |> preload([:gist])
       |> Repo.paginate(page: page, page_size: 10)
     saved_gist_ids
-    IO.inspect(saved_gist_ids)
   end
 
   @doc """
