@@ -70,7 +70,12 @@ defmodule ElixirGistWeb.GistFormComponent do
             </div>
           <% else %>
             <div class="flex justify-end">
-              <.button class="gist-button" disabled>Log In To Create Gists</.button>
+              <a
+                class="gist-button-href"
+                href={~p"/users/log_in"}
+              >
+                Log In To Create Gists
+              </a>
             </div>
           <% end %>
         </div>
@@ -96,6 +101,9 @@ defmodule ElixirGistWeb.GistFormComponent do
     end
   end
 
+  def handle_event("login_redirect", _, socket) do
+    {:noreply, push_navigate(socket, to: ~p"/users/log_in")}
+  end
 
   defp create_gist(params, socket) do
     case Gists.create_gist(socket.assigns.current_user, params) do

@@ -39,7 +39,11 @@
       id="user-menu-button"
       phx-click={ElixirGistWeb.Layouts.App.toggle_dropdown_menu()}
     >
-      <img src="/images/user-hand.svg" alt="Profile Image" class="round-image-padding w-8 h-8" />
+      <%= if @current_user do %>
+        <img src="/images/user-hand.svg" alt="Profile Image" class="round-image-padding w-8 h-8" />
+      <% else %>
+        <img src="/images/anon-user.svg" alt="Anon Profile Image" class="round-image-padding w-8 h-8" />
+      <% end %>
     </button>
     <div
       id="dropdown_menu"

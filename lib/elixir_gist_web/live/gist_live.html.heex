@@ -1,7 +1,7 @@
 <div class="gist-gradient flex flex-col items-center justify-center p-2">
   <div class="flex flex-wrap flex-row justify-between w-full mt-24 max-w-[70rem] px-4 transition-all shrink-0">
     <div id="gist-metadata"class="flex pb-4 w-fit">
-      <%= if (@gist.user_id == @current_user.id) do %>
+      <%= if (@current_user != nil and (@gist.user_id == @current_user.id)) do %>
         <img src="/images/user-hand.svg" class="round-image-padding w-10 h-10" alt="Profile Image" />
       <% else %>
         <img
@@ -11,7 +11,7 @@
         />
       <% end %>
       <div class="justify-start mr-auto ml-4">
-        <%= if (@gist.user_id == @current_user.id) do %>
+        <%= if (@current_user != nil and (@gist.user_id == @current_user.id)) do %>
           <span class="font-normal text-base text-gistLav-dark"><%= @current_user.email %></span>
           <span class="text-white">/</span>
         <% else %>
@@ -29,25 +29,35 @@
     </div>
 
     <div class="group flex items-center">
-      <%= if Gists.get_saved_gist!(@gist.id) do %>
-        <button
-          class="flex items-center group-hover:bg-gistPurp border-white border-[1px] text-white h-8 font-bold py-2 px-2 rounded-md transition w-24"
-          phx-click="unsave-gist"
-          phx-value-gist_id={@gist.id}
-        >
-          <img src="/images/BookmarkFilled.svg" alt="Saved Button" class="text-center" /> Saved
-          <img />
-        </button>
+      <%= if (@current_user != nil) do %>
+        <%= if Gists.get_saved_gist!(@gist.id) do %>
+          <button
+            class="flex items-center group-hover:bg-gistPurp border-white border-[1px] text-white h-8 font-bold py-2 px-2 rounded-md transition w-24"
+            phx-click="unsave-gist"
+            phx-value-gist_id={@gist.id}
+          >
+            <img src="/images/BookmarkFilled.svg" alt="Saved Button" class="text-center" /> Saved
+            <img />
+          </button>
+        <% else %>
+          <button
+            class="flex items-center text-center group-hover:bg-gistPurp border-white border-[1px] text-white h-8 font-bold py-2 px-2 rounded-md transition w-24"
+            phx-click="save-gist"
+            phx-value-gist_id={@gist.id}
+            phx-value-user_id={@current_user.id}
+          >
+            <img src="/images/BookmarkOutline.svg" alt="Save Button" class="text-center" /> Save
+            <img />
+          </button>
+        <% end %>
       <% else %>
-        <button
-          class="flex items-center text-center group-hover:bg-gistPurp border-white border-[1px] text-white h-8 font-bold py-2 px-2 rounded-md transition w-24"
-          phx-click="save-gist"
-          phx-value-gist_id={@gist.id}
-          phx-value-user_id={@current_user.id}
+        <a
+          class="flex items-center group-hover:bg-gistPurp border-white border-[1px] text-white h-8 font-bold py-2 px-2 rounded-md transition"
+          href={~p"/users/log_in"}
         >
-          <img src="/images/BookmarkOutline.svg" alt="Save Button" class="text-center" /> Save
+          <img src="/images/BookmarkOutline.svg" alt="Login Save Button" class="text-center" /> Log In to Save
           <img />
-        </button>
+        </a>
       <% end %>
     </div>
   </div>
@@ -70,7 +80,7 @@
           <%= @gist.name %>
         </div>
         <div class="group flex flex-shrink-0 pl-2">
-          <%= if @current_user.id == @gist.user_id do %>
+          <%= if (@current_user != nil and (@current_user.id == @gist.user_id)) do %>
             <button
               class="interactive-image-button px-1"
               type="button"
