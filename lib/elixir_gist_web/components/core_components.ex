@@ -611,7 +611,7 @@ defmodule ElixirGistWeb.CoreComponents do
   def gists_header(assigns) do
     ~H"""
     <div class="gist-gradient flex flex-col items-center justify-center p-2">
-      <div class="flex  justify-between w-full mt-24 max-w-[70rem] transition-all">
+      <div class="flex justify-between w-full mt-24 max-w-[70rem] transition-all">
         <div class="flex items-center shrink-0 ml-4">
           <div class="shrink-0 text-xl sm:text-2xl text-white font-bold">
             <%= @type %> Gists
