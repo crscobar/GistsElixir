@@ -13,64 +13,93 @@ defmodule ElixirGistWeb.UserSettingsLive do
         Manage your account email address and password settings
       </h3>
     </div>
-    <div class="mx-auto max-w-sm pt-10">
-      <div>
-        <.form for={@email_form} id="email_form" phx-submit="update_email" phx-change="validate_email">
-          <.input field={@email_form[:email]} type="email" placeholder="Email" required />
-          <.input
-            field={@email_form[:current_password]}
-            name="current_password"
-            id="current_password_for_email"
-            type="password"
-            placeholder="Current password"
-            value={@email_form_current_password}
-            required
-          />
-          <div class="py-6">
-            <.button phx-disable-with="Changing..." class="gist-button">Change Email</.button>
-          </div>
-        </.form>
+    <div class="flex flex-row flex-wrap w-full justify-center">
+      <div id="form-container" class="p-10 w-96">
+        <div id="email-form" class="py-4 px-6 border border-gistPurp-light bg-gistDark max-w-[22rem] w-full h-72 rounded-lg shrink-0">
+          <p class="font-brand font-bold text-xl text-gistPurp-light">Change Email</p>
+          <.form for={@email_form} id="email_form" phx-submit="update_email" phx-change="validate_email" class="relative h-[90%]">
+            <.input field={@email_form[:email]} type="email" placeholder="Email" required />
+            <.input
+              field={@email_form[:current_password]}
+              name="current_password"
+              id="current_password_for_email"
+              type="password"
+              placeholder="Current password"
+              value={@email_form_current_password}
+              required
+            />
+            <div class="absolute inset-x-0 bottom-4">
+              <.button phx-disable-with="Changing..." class="gist-button">Change Email</.button>
+            </div>
+          </.form>
+        </div>
       </div>
-      <div>
-        <.form
-          for={@password_form}
-          id="password_form"
-          action={~p"/users/log_in?_action=password_updated"}
-          method="post"
-          phx-change="validate_password"
-          phx-submit="update_password"
-          phx-trigger-action={@trigger_submit}
-        >
-          <.input
-            field={@password_form[:email]}
-            type="hidden"
-            id="hidden_user_email"
-            value={@current_email}
-          />
-          <.input
-            field={@password_form[:password]}
-            type="password"
-            placeholder="New password"
-            required
-          />
-          <.input
-            field={@password_form[:password_confirmation]}
-            type="password"
-            placeholder="Confirm new password"
-          />
-          <.input
-            field={@password_form[:current_password]}
-            name="current_password"
-            type="password"
-            placeholder="Current password"
-            id="current_password_for_password"
-            value={@current_password}
-            required
-          />
-          <div class="py-6">
-            <.button phx-disable-with="Changing..." class="gist-button">Change Password</.button>
-          </div>
-        </.form>
+
+      <div id="form-container" class="p-10 w-96">
+        <div id="password-form" class="py-4 px-6 border border-gistPurp-light bg-gistDark max-w-[22rem] w-full h-72 rounded-lg shrink-0">
+          <p class="font-brand font-bold text-xl text-gistPurp-light">Change Password</p>
+          <.form
+            for={@password_form}
+            id="password_form"
+            action={~p"/users/log_in?_action=password_updated"}
+            method="post"
+            phx-change="validate_password"
+            phx-submit="update_password"
+            phx-trigger-action={@trigger_submit}
+            class="relative h-[90%]"
+          >
+            <.input
+              field={@password_form[:email]}
+              type="hidden"
+              id="hidden_user_email"
+              value={@current_email}
+            />
+            <.input
+              field={@password_form[:current_password]}
+              name="current_password"
+              type="password"
+              placeholder="Current password"
+              id="current_password_for_password"
+              value={@current_password}
+              required
+            />
+            <.input
+              field={@password_form[:password]}
+              type="password"
+              placeholder="New password"
+              required
+            />
+            <.input
+              field={@password_form[:password_confirmation]}
+              type="password"
+              placeholder="Confirm new password"
+            />
+            <div class="absolute inset-x-0 bottom-4">
+              <.button phx-disable-with="Changing..." class="gist-button">Change Password</.button>
+            </div>
+          </.form>
+        </div>
+      </div>
+
+      <div id="form-container" class="p-10 w-96">
+        <div id="username-form" class="py-4 px-6 border border-gistPurp-light bg-gistDark max-w-[22rem] w-full h-72 rounded-lg shrink-0">
+          <p class="font-brand font-bold text-xl text-gistPurp-light">Change Username</p>
+          <.form for={@username_form} id="username_form" phx-submit="update_username" phx-change="validate_username" class="relative h-[90%]">
+            <.input field={@username_form[:username]} type="text" placeholder="Username" required />
+            <.input
+              field={@username_form[:current_password]}
+              name="current_password"
+              id="current_password_for_username"
+              type="password"
+              placeholder="Current password"
+              value={@username_form_current_password}
+              required
+            />
+            <div class="absolute inset-x-0 bottom-4">
+              <.button phx-disable-with="Changing..." class="gist-button">Change Username</.button>
+            </div>
+          </.form>
+        </div>
       </div>
     </div>
     """
@@ -93,14 +122,18 @@ defmodule ElixirGistWeb.UserSettingsLive do
     user = socket.assigns.current_user
     email_changeset = Accounts.change_user_email(user)
     password_changeset = Accounts.change_user_password(user)
+    username_changeset = Accounts.change_user_username(user)
 
     socket =
       socket
       |> assign(:current_password, nil)
       |> assign(:email_form_current_password, nil)
+      |> assign(:username_form_current_password, nil)
       |> assign(:current_email, user.email)
       |> assign(:email_form, to_form(email_changeset))
+      |> assign(:current_username, user.username)
       |> assign(:password_form, to_form(password_changeset))
+      |> assign(:username_form, to_form(username_changeset))
       |> assign(:trigger_submit, false)
 
     {:ok, socket}
@@ -165,6 +198,36 @@ defmodule ElixirGistWeb.UserSettingsLive do
 
       {:error, changeset} ->
         {:noreply, assign(socket, password_form: to_form(changeset))}
+    end
+  end
+
+  def handle_event("validate_username", params, socket) do
+    %{"current_password" => password, "user" => user_params} = params
+
+    username_form =
+      socket.assigns.current_user
+      |> Accounts.change_user_username(user_params)
+      |> Map.put(:action, :validate)
+      |> to_form()
+
+    {:noreply, assign(socket, username_form: username_form, username_form_current_password: password)}
+  end
+
+  def handle_event("update_username", params, socket) do
+    %{"current_password" => password, "user" => user_params} = params
+    user = socket.assigns.current_user
+
+    case Accounts.update_user_username(user, password, user_params) do
+      {:ok, user} ->
+        username_form =
+          user
+          |> Accounts.change_user_username(user_params)
+          |> to_form()
+
+        {:noreply, assign(socket, trigger_submit: true, username_form: username_form)}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, username_form: to_form(changeset))}
     end
   end
 end

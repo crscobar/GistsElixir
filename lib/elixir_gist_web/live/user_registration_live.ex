@@ -14,7 +14,7 @@ defmodule ElixirGistWeb.UserRegistrationLive do
         Already registered?
         <.link
           navigate={~p"/users/log_in"}
-          class="font-semibold text-brand hover:underline text-emLavender-dark"
+          class="font-semibold text-brand hover:underline text-gistPurp-light"
         >
           Sign in
         </.link>
@@ -25,6 +25,7 @@ defmodule ElixirGistWeb.UserRegistrationLive do
       <.form for={@form} id="registration_form" phx-submit="save">
         <.input field={@form[:email]} type="email" placeholder="Email" required />
         <.input field={@form[:password]} type="password" placeholder="Password" required />
+        <.input field={@form[:username]} type="text" placeholder="Username" required />
         <div class="py-6">
           <.button phx-disable-with="Creating account..." class="gist-button w-full">
             Create an account
