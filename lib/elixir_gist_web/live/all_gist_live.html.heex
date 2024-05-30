@@ -15,13 +15,8 @@
             />
           <% end %>
           <div class="justify-start mr-auto ml-4">
-            <%= if (@current_user != nil and (g.user_id == @current_user.id)) do %>
-              <span class="font-normal text-base text-gistLav-dark"><%= @current_user.email %></span>
-              <span class="text-white">/</span>
-            <% else %>
-              <span class="font-normal text-base text-gistLav-dark">Anonymous User</span>
-              <span class="text-white">/</span>
-            <% end %>
+            <span class="font-normal text-base text-gistLav-dark"><%= get_username_from_user_id(g.user_id) %></span>
+            <span class="text-white">/</span>
             <a href={~p"/gist?id=#{g.id}"} class="font-bold text-bol text-gistLav-dark hover:text-gistLav-light transition"><%= g.name %></a>
             <div class="text-sm text-white/70 font-normal">
               <%= "Updated #{get_relative_time(g) |> elem(1)}" %>

@@ -1,5 +1,8 @@
 defmodule ElixirGistWeb.GistLive do
   use ElixirGistWeb, :live_view
+
+  import ElixirGist.Helpers
+
   alias ElixirGist.Gists
   alias ElixirGistWeb.GistFormComponent
 
@@ -43,8 +46,8 @@ defmodule ElixirGistWeb.GistLive do
     end
   end
 
-  def handle_event("unsave-gist", %{"gist_id" => gist_id}, socket) do
-    case Gists.delete_saved_gist(%{gist_id: gist_id}) do
+  def handle_event("unsave-gist", %{"gist_id" => gist_id, "user_id" => user_id}, socket) do
+    case Gists.delete_user_saved_gist(%{gist_id: gist_id, user_id: user_id}) do
       {:ok, _gist} ->
         socket = put_flash(socket, :info, "Gist successfully unsaved")
         {:noreply, push_navigate(socket, to: ~p"/gist?id=#{gist_id}")}

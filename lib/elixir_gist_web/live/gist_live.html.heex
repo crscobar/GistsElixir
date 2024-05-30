@@ -11,13 +11,8 @@
         />
       <% end %>
       <div class="justify-start mr-auto ml-4">
-        <%= if (@current_user != nil and (@gist.user_id == @current_user.id)) do %>
-          <span class="font-normal text-base text-gistLav-dark"><%= @current_user.email %></span>
-          <span class="text-white">/</span>
-        <% else %>
-          <span class="font-normal text-base text-gistLav-dark">Anonymous User</span>
-          <span class="text-white">/</span>
-        <% end %>
+        <span class="font-normal text-base text-gistLav-dark"><%= get_username_from_user_id(@gist.user_id) %></span>
+        <span class="text-white">/</span>
         <span class="font-normal text-gistLav-dark"><%= @gist.name %></span>
         <div class="text-sm text-white/70 font-normal">
           <%= "Updated #{@gist.relative}" %>
@@ -30,11 +25,12 @@
 
     <div class="group flex items-center">
       <%= if (@current_user != nil) do %>
-        <%= if Gists.get_saved_gist!(@gist.id) do %>
+        <%= if (Gists.get_user_saved_gist(@gist.id, @current_user.id)) do %>
           <button
             class="flex items-center group-hover:bg-gistPurp border-white border-[1px] text-white h-8 font-bold py-2 px-2 rounded-md transition w-24"
             phx-click="unsave-gist"
             phx-value-gist_id={@gist.id}
+            phx-value-user_id={@current_user.id}
           >
             <img src="/images/BookmarkFilled.svg" alt="Saved Button" class="text-center" /> Saved
             <img />

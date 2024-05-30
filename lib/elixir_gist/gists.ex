@@ -190,6 +190,28 @@ defmodule ElixirGist.Gists do
   def get_saved_gist!(gist_id), do: Repo.get_by(SavedGist, gist_id: gist_id)
 
   @doc """
+  Gets a single saved_gist.
+
+  Raises `Ecto.NoResultsError` if the Saved gist does not exist.
+
+  ## Examples
+
+      iex> get_saved_gist!(123)
+      %SavedGist{}
+
+      iex> get_saved_gist!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_user_saved_gist(gist_id, user_id) do
+    gist = Repo.one(from sg in SavedGist, where: sg.gist_id == ^gist_id and sg.user_id == ^user_id)
+    IO.puts("YES?")
+    IO.puts("GIST ID: #{gist_id}")
+    IO.inspect(gist)
+    gist
+  end
+
+  @doc """
   Creates a saved_gist.
 
   ## Examples
@@ -241,6 +263,24 @@ defmodule ElixirGist.Gists do
   def delete_saved_gist(attrs) do
     gist = Gists.get_saved_gist!(attrs.gist_id)
     gist
+    |> Repo.delete()
+  end
+
+  @doc """
+  Deletes a saved_gist for given user_id.
+
+  ## Examples
+
+      iex> delete_saved_gist(saved_gist)
+      {:ok, %SavedGist{}}
+
+      iex> delete_saved_gist(saved_gist)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_user_saved_gist(attrs) do
+    sg = Gists.get_user_saved_gist(attrs.gist_id, attrs.user_id)
+    sg
     |> Repo.delete()
   end
 
