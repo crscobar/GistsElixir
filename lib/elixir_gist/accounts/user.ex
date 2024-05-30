@@ -9,6 +9,7 @@ defmodule ElixirGist.Accounts.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
     field :username, :string
+    field :profile_image, :string
     has_many :gists, ElixirGist.Gists.Gist
     has_many :saved_gists, ElixirGist.Gists.SavedGist
 
@@ -147,6 +148,14 @@ defmodule ElixirGist.Accounts.User do
     |> cast(attrs, [:password])
     |> validate_confirmation(:password, message: "does not match password")
     |> validate_password(opts)
+  end
+
+  @doc """
+  A User changeset for updating Profile Image
+  """
+  def profile_image_changeset(user, attrs, _opts \\ []) do
+    user
+    |> cast(attrs, [:profile_image])
   end
 
   @doc """

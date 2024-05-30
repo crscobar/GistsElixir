@@ -132,6 +132,14 @@ form input[type="text"], input[type="email"], input[type="password"] :focus {
     @apply hover:bg-gistPurp text-white/90 border border-white/80 transition;
 }
 
+.settings-form-container {
+    @apply p-10 w-[32rem];
+}
+
+.settings-form {
+    @apply relative py-4 px-6 border border-gistPurp-light bg-gistDark max-w-[28rem] w-full h-96 rounded-lg shrink-0;
+}
+
 .interactive-image-button img:hover {
     filter: brightness(70%);
 }

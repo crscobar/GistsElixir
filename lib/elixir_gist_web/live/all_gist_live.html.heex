@@ -6,10 +6,10 @@
       <div id={"syntax-section-#{index}"} style="display: lock" class="w-full mb-10 mr-auto ml-auto max-w-[70rem] px-4">
         <div id={"gist-metadata-#{index}"} class="flex pb-4 w-fit">
           <%= if (@current_user != nil and (g.user_id == @current_user.id)) do %>
-            <img src="/images/user-hand.svg" class="round-image-padding w-10 h-10 " alt="Profile Image" />
+            <img src={@current_user.profile_image} class="round-image-padding w-10 h-10 " alt="Profile Image" />
           <% else %>
             <img
-              src="/images/anon-user.svg"
+              src={get_user_profile_image(g.user_id)}
               class="round-image-padding w-10 h-10"
               alt="Anon User Image"
             />

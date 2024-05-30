@@ -2,7 +2,7 @@
   <div class="flex flex-wrap flex-row justify-between w-full mt-24 max-w-[70rem] px-4 transition-all shrink-0">
     <div id="gist-metadata"class="flex pb-4 w-fit">
       <%= if (@current_user != nil and (@gist.user_id == @current_user.id)) do %>
-        <img src="/images/user-hand.svg" class="round-image-padding w-10 h-10" alt="Profile Image" />
+        <img src={@current_user.profile_image} class="round-image-padding w-10 h-10" alt="Profile Image" />
       <% else %>
         <img
           src="/images/anon-user.svg"

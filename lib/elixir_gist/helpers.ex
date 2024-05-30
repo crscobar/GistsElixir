@@ -13,4 +13,11 @@ defmodule ElixirGist.Helpers do
     username = Repo.one(from u in User, where: u.id == ^user_id, select: u.username)
     username
   end
+
+  def get_user_profile_image(user_id) do
+    user_profile_image = Repo.one(from u in User, where: u.id == ^user_id, select: u.profile_image)
+    IO.puts("USER PROFILE IMAGE")
+    IO.inspect(user_profile_image)
+    user_profile_image
+  end
 end

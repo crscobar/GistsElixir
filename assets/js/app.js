@@ -22,6 +22,7 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import hljs from "highlight.js"
+import { resizeImage } from "./image_resizer"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
@@ -170,6 +171,52 @@ Hooks.ToggleEdit = {
       if (edit && syntax) {
         edit.style.display = "block"
         syntax.style.display = "none"
+      }
+    })
+  }
+}
+
+
+Hooks.Resize = {
+  mounted() {
+    const maxWidth = 250
+    const maxHeight = 250
+
+    let imageInput = document.getElementById("profile-image-uploader")
+
+    // Inspired by blog-post https://imagekit.io/blog/how-to-resize-image-in-javascript/
+    imageInput.addEventListener('change', function (e) {
+      if (e.target.files) {
+        let imageFile = e.target.files[0];
+
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          const image = new Image()
+          image.onload = () => {
+            const dataUrl = resizeImage(image, maxWidth, maxHeight)
+
+            if (dataUrl.length === 0) {
+              return;
+            }
+
+            let resizedImage = document.getElementById("image-preview") ?? new Image()
+            resizedImage.setAttribute("id", "image-preview")
+            resizedImage.setAttribute("alt", "Preview")
+            resizedImage.src = dataUrl
+
+            document.getElementById("image-preview-container").appendChild(resizedImage)
+
+            hiddenInput = document.getElementById("profile-image-src-input")
+            hiddenInput.value = dataUrl
+            hiddenInput.dispatchEvent(
+              new Event("input", {bubbles: true})
+            )
+          }
+
+          image.src = e.target.result
+        }
+
+        reader.readAsDataURL(imageFile);
       }
     })
   }

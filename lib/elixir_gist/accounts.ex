@@ -255,6 +255,19 @@ defmodule ElixirGist.Accounts do
     end
   end
 
+  @doc """
+  Returns an `%Ecto.Chageset{}` for updating the user profile_image.
+  """
+  def change_profile_image(user, attrs \\ %{}) do
+    User.profile_image_changeset(user, attrs)
+  end
+
+  def update_profile_image(%User{} = user, attrs) do
+    user
+    |> User.profile_image_changeset(attrs)
+    |> Repo.update()
+  end
+
   ## Session
 
   @doc """
