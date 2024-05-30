@@ -1,6 +1,7 @@
 defmodule ElixirGist.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "users" do
@@ -9,7 +10,7 @@ defmodule ElixirGist.Accounts.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
     field :username, :string
-    field :profile_image, :string
+    field :profile_image, :string, default: "/images/user-hand.svg"
     has_many :gists, ElixirGist.Gists.Gist
     has_many :saved_gists, ElixirGist.Gists.SavedGist
 
