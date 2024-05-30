@@ -2,7 +2,6 @@ defmodule ElixirGist.ImageValidator do
   def validate_image(data_url, allowed_file_size, allowed_file_types)
       when is_binary(data_url) and is_integer(allowed_file_size) and is_list(allowed_file_types) do
     # Extract the media type and the base64 part from the data_url
-    IO.puts("Validating IMAGE")
     [meta_data, base64] = String.split(data_url, ",")
 
     [media_type, _] = String.replace(meta_data, "data:", "") |> String.split(";")
@@ -19,7 +18,6 @@ defmodule ElixirGist.ImageValidator do
     # Check if the file extension is allowed
     case Enum.member?(allowed_file_types, file_ext) do
       true ->
-        IO.puts("Validating IMAGE TRUE")
         # Check if the file size is less than or equal to 2MB
         case file_size <= allowed_file_size do
           true ->
@@ -31,7 +29,6 @@ defmodule ElixirGist.ImageValidator do
         end
 
       false ->
-        IO.puts("Validating IMAGE FALSE")
         # Return an error message for invalid file extension
         {:error, "Image file type must be jpg, jpeg, png, or gif"}
     end

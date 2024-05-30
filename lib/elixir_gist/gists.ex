@@ -205,9 +205,6 @@ defmodule ElixirGist.Gists do
   """
   def get_user_saved_gist(gist_id, user_id) do
     gist = Repo.one(from sg in SavedGist, where: sg.gist_id == ^gist_id and sg.user_id == ^user_id)
-    IO.puts("YES?")
-    IO.puts("GIST ID: #{gist_id}")
-    IO.inspect(gist)
     gist
   end
 

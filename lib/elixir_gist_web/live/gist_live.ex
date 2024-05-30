@@ -68,7 +68,6 @@ defmodule ElixirGistWeb.GistLive do
   end
 
   def handle_info("show_end", socket) do
-    IO.puts('show end')
     {:noreply, socket}
   end
 
