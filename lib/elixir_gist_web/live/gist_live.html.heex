@@ -5,7 +5,7 @@
         <img src={@current_user.profile_image} class="round-image-padding w-10 h-10" alt="Profile Image" />
       <% else %>
         <img
-          src="/images/anon-user.svg"
+          src={get_user_profile_image(@gist.user_id)}
           class="round-image-padding w-10 h-10"
           alt="Anon User Image"
         />

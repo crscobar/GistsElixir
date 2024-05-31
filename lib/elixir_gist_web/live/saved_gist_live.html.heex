@@ -1,48 +1,59 @@
 <.gists_header type="Saved" num_gists={@user_saved_gists.total_entries} />
 
 <div class="2xl:container 2xl:mx-auto transition">
-  <div id="gists-section" class="w-full items-center mt-10 px-2">
-    <%= for {saved, index} <- Enum.with_index(@user_saved_gists.entries) do %>
-      <div id={"syntax-section-#{index}"} style="display: lock" class="w-full mb-10 mr-auto ml-auto max-w-[70rem] px-4">
-        <div id={"gist-metadata-#{index}"} class="flex pb-4 w-fit">
-          <%= if (saved.gist.user_id == @current_user.id) do %>
-            <img src={@current_user.profile_image} class="round-image-padding w-10 h-10 " alt="Profile Image" />
-          <% else %>
-            <img
-              src="/images/anon-user.svg"
-              class="round-image-padding w-10 h-10"
-              alt="Anon User Image"
-            />
-          <% end %>
-          <div class="justify-start mr-auto ml-4">
-            <span class="font-normal text-base text-gistLav-dark"><%= get_username_from_user_id(saved.gist.user_id) %></span>
-            <span class="text-white">/</span>
-            <a href={~p"/gist?id=#{saved.gist.id}"} class="font-bold text-bol text-gistLav-dark hover:text-gistLav-light transition"><%= saved.gist.name %></a>
-            <div class="text-sm text-white/70 font-normal">
-              <%= "Updated #{get_relative_time(saved.gist) |> elem(1)}" %>
+  <%= if (@user_saved_gists.total_entries == 0) do %>
+    <div class="text-center pb-10">
+      <h1 class="text-3xl font-brand font-bold">You haven't saved any gists yet :(</h1>
+      <h2 class="text-xl font-brand font-normal text-white/90 pt-10">
+        Try exploring
+        <a href={~p"/gist/all"} class="font-bold text-bold text-gistLav-dark hover:text-gistLav-light transition">All Gists</a>
+        and save some gists!
+      </h2>
+    </div>    
+  <% else %>
+    <div id="gists-section" class="w-full items-center mt-10 px-2">
+      <%= for {saved, index} <- Enum.with_index(@user_saved_gists.entries) do %>
+        <div id={"syntax-section-#{index}"} style="display: lock" class="w-full mb-10 mr-auto ml-auto max-w-[70rem] px-4">
+          <div id={"gist-metadata-#{index}"} class="flex pb-4 w-fit">
+            <%= if (saved.gist.user_id == @current_user.id) do %>
+              <img src={@current_user.profile_image} class="round-image-padding w-10 h-10 " alt="Profile Image" />
+            <% else %>
+              <img
+                src={get_user_profile_image(saved.gist.user_id)}
+                class="round-image-padding w-10 h-10"
+                alt="Anon User Image"
+              />
+            <% end %>
+            <div class="justify-start mr-auto ml-4">
+              <span class="font-normal text-base text-gistLav-dark"><%= get_username_from_user_id(saved.gist.user_id) %></span>
+              <span class="text-white">/</span>
+              <a href={~p"/gist?id=#{saved.gist.id}"} class="font-bold text-gistLav-dark hover:text-gistLav-light transition"><%= saved.gist.name %></a>
+              <div class="text-sm text-white/70 font-normal">
+                <%= "Updated #{get_relative_time(saved.gist) |> elem(1)}" %>
+              </div>
+              <div class="text-sm text-white/70 font-normal">
+                <%= saved.gist.description %>
+              </div>
             </div>
-            <div class="text-sm text-white/70 font-normal">
-              <%= saved.gist.description %>
+          </div>
+          
+          <div id={"gist-wrapper-#{index}"} class="group flex justify-center">
+            <textarea id={"syntax-numbers-#{index}"} class="syntax-numbers rounded-l-md" readonly />
+            <div
+              id={"highlight-#{index}"}
+              class="syntax-area w-full rounded-r-md border-white max-w-[68rem] overflow-x-auto"
+              phx-hook="Highlight"
+              data-name={saved.gist.name}
+            >
+              <pre><code>
+                <%= saved.gist.markup_text %>
+              </code></pre>
             </div>
           </div>
         </div>
-        
-        <div id={"gist-wrapper-#{index}"} class="group flex justify-center">
-          <textarea id={"syntax-numbers-#{index}"} class="syntax-numbers rounded-l-md" readonly />
-          <div
-            id={"highlight-#{index}"}
-            class="syntax-area w-full rounded-r-md border-white max-w-[68rem] overflow-x-auto"
-            phx-hook="Highlight"
-            data-name={saved.gist.name}
-          >
-            <pre><code>
-              <%= saved.gist.markup_text %>
-            </code></pre>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
-
-  <.pagination_footer page_number={@user_saved_gists.page_number} total_pages={@user_saved_gists.total_pages} />
+      <% end %>
+    </div>
+    
+    <.pagination_footer page_number={@user_saved_gists.page_number} total_pages={@user_saved_gists.total_pages} />
+  <% end %>
 </div>
