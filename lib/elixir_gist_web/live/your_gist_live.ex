@@ -4,7 +4,6 @@ defmodule ElixirGistWeb.YourGistLive do
   alias ElixirGist.Gists
   import ElixirGist.Helpers
 
-  # TODO: when no gists, display text "No gists created yet :("
   def mount(params, _session, socket) do
     user_gists = Gists.list_user_gists(socket.assigns.current_user, params["page"])
 
