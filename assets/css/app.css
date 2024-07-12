@@ -147,3 +147,7 @@ form input[type="text"], input[type="email"], input[type="password"] :focus {
 .interactive-image-button img:active {
     transform: scale(1.2);
 }
+
+.search-icon {
+    @apply w-6 h-6 translate-x-5 translate-y-11;
+}

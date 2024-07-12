@@ -174,6 +174,26 @@ defmodule ElixirGist.Gists do
   end
 
   @doc """
+  Returns a list of all gists containing search term in title or text.
+
+  ## Examples
+
+      iex> search_gists_for_term()
+      [%Gist{}, ...]
+
+  """
+  def search_gists_for_term(search_term) do
+    matching_gists =
+      Gist
+      |> where([g], ilike(g.name, ^"%#{search_term}%") or ilike(g.markup_text, ^"%#{search_term}%"))
+      |> Repo.all()
+      # |> Repo.paginate(page: page, page_size: 10)
+    IO.puts("SEARCHING FOR GISTS")
+    IO.inspect(matching_gists)
+    matching_gists
+  end
+
+  @doc """
   Gets a single saved_gist.
 
   Raises `Ecto.NoResultsError` if the Saved gist does not exist.

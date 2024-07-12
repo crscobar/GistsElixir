@@ -28,6 +28,7 @@ defmodule ElixirGistWeb.Router do
       live "/gist/all", AllGistLive
       live "/gist", GistLive
       live "/about", AboutLive
+      live "/gist/search", SearchGistLive
     end
 
   end

@@ -11,11 +11,28 @@
     </a>
     <div class="content-center">
       <%= if @current_user do %>
-        <input
+        <%!-- <input
           type="text"
           class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-light placeholder-white/50 text-white font-brand font-regular text-sm sm:mr-6 mr-2 border-white/50 transition sm:w-48 w-28"
           placeholder="Search Gists..."
-        />
+        /> --%>
+
+        <%!-- <.form :let={f} for={%{}} as={:search} action={~p"/gist/search"} method="get">
+          <.input
+            field={f[:query]} 
+            placeholder="Search Gists..."
+            class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-light placeholder-white/50 text-white font-brand font-regular text-sm sm:mr-6 mr-2 border-white/50 transition sm:w-48 w-28"
+          />
+        </.form> --%>
+
+        <.form :let={f} for={%{}} as={:search_term} action={~p"/gist/search"} method="get">
+          <.input
+            field={f[:query]} 
+            placeholder="Search Gists..."
+            class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-light placeholder-white/50 text-white font-brand font-regular text-sm sm:mr-6 mr-2 border-white/50 transition sm:w-48 w-28"
+          />
+        </.form>
+
       <% else %>
         <input
           type="text"
