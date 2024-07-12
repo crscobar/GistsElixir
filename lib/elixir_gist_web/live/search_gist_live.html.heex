@@ -1,49 +1,58 @@
 <.gists_header_trailing trailing="Results" num_gists={@searched_gists.total_entries} />
 
 <div class="2xl:container 2xl:mx-auto transition">
-  <div id="gists-section" class="w-full items-center mt-10 px-2">
-    <%= for {g, index} <- Enum.with_index(@searched_gists) do %>
-      <div id={"syntax-section-#{index}"} style="display: lock" class="w-full mb-10 mr-auto ml-auto max-w-[70rem] px-4">
-        <div id={"gist-metadata-#{index}"} class="flex pb-4 w-fit">
-          <%= if (@current_user != nil and (g.user_id == @current_user.id)) do %>
-            <img src={@current_user.profile_image} class="round-image-padding w-10 h-10 " alt="Profile Image" />
-          <% else %>
-            <img
-              src={get_user_profile_image(g.user_id)}
-              class="round-image-padding w-10 h-10"
-              alt="Anon User Image"
-            />
-          <% end %>
-          <div class="justify-start mr-auto ml-4">
-            <span class="font-normal text-base text-gistLav-dark"><%= get_username_from_user_id(g.user_id) %></span>
-            <span class="text-white">/</span>
-            <a href={~p"/gist?id=#{g.id}"} class="font-bold text-bol text-gistLav-dark hover:text-gistLav-light transition"><%= g.name %></a>
-            <div class="text-sm text-white/70 font-normal">
-              <%= "Updated #{get_relative_time(g) |> elem(1)}" %>
+  <%= if (@searched_gists.total_entries == 0) do %>
+    <div class="text-center pb-10">
+      <h1 class="text-3xl font-brand font-bold">We couldn't find any gists matching: '<%= @search_term %>' </h1>
+      <h2 class="text-xl font-brand font-normal text-white/90 pt-10">
+        Try a different search!
+      </h2>
+    </div>    
+  <% else %>
+    <div id="gists-section" class="w-full items-center mt-10 px-2">
+      <%= for {g, index} <- Enum.with_index(@searched_gists) do %>
+        <div id={"syntax-section-#{index}"} style="display: lock" class="w-full mb-10 mr-auto ml-auto max-w-[70rem] px-4">
+          <div id={"gist-metadata-#{index}"} class="flex pb-4 w-fit">
+            <%= if (@current_user != nil and (g.user_id == @current_user.id)) do %>
+              <img src={@current_user.profile_image} class="round-image-padding w-10 h-10 " alt="Profile Image" />
+            <% else %>
+              <img
+                src={get_user_profile_image(g.user_id)}
+                class="round-image-padding w-10 h-10"
+                alt="Anon User Image"
+              />
+            <% end %>
+            <div class="justify-start mr-auto ml-4">
+              <span class="font-normal text-base text-gistLav-dark"><%= get_username_from_user_id(g.user_id) %></span>
+              <span class="text-white">/</span>
+              <a href={~p"/gist?id=#{g.id}"} class="font-bold text-bol text-gistLav-dark hover:text-gistLav-light transition"><%= g.name %></a>
+              <div class="text-sm text-white/70 font-normal">
+                <%= "Updated #{get_relative_time(g) |> elem(1)}" %>
+              </div>
+              <div class="text-sm text-white/70 font-normal">
+                <%= g.description %>
+              </div>
             </div>
-            <div class="text-sm text-white/70 font-normal">
-              <%= g.description %>
+          </div>
+          
+          <div id={"gist-wrapper-#{index}"} class="group flex justify-center">
+            <textarea id={"syntax-numbers-#{index}"} class="syntax-numbers rounded-l-md" readonly />
+            <div
+              id={"highlight-#{index}"}
+              class="syntax-area w-full rounded-r-md border-white max-w-[68rem] overflow-x-auto"
+              phx-hook="Highlight"
+              data-name={g.name}
+            >
+              <pre><code>
+                <%= g.markup_text %>
+              </code></pre>
             </div>
           </div>
         </div>
-        
-        <div id={"gist-wrapper-#{index}"} class="group flex justify-center">
-          <textarea id={"syntax-numbers-#{index}"} class="syntax-numbers rounded-l-md" readonly />
-          <div
-            id={"highlight-#{index}"}
-            class="syntax-area w-full rounded-r-md border-white max-w-[68rem] overflow-x-auto"
-            phx-hook="Highlight"
-            data-name={g.name}
-          >
-            <pre><code>
-              <%= g.markup_text %>
-            </code></pre>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
 
   <.pagination_footer page_number={@searched_gists.page_number} total_pages={@searched_gists.total_pages} />
+  <% end %>
 </div>
 
