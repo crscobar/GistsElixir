@@ -187,8 +187,6 @@ defmodule ElixirGist.Gists do
       Gist
       |> where([g], ilike(g.name, ^"%#{search_term}%") or ilike(g.markup_text, ^"%#{search_term}%"))
       |> Repo.paginate(page: page, page_size: 10)
-    IO.puts("SEARCHING FOR GISTS")
-    IO.inspect(matching_gists)
     matching_gists
   end
 
