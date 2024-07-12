@@ -1,5 +1,5 @@
 <header class="flex justify-between items-center sm:px-4 px-3 py-3 bg-gistDark">
-  <div class="flex relative shrink-0">
+  <div class="flex relative shrink-0 justify-center items-center ">
     <%!-- Anchor tag↓ that takes us back to "/" page when the logo is clicked  --%>
     <a href={~p"/"}>
       <img src={~p"/images/gist-logo.svg"} alt="Logo" class="h-8 w-auto" />
@@ -9,30 +9,15 @@
         Gist
       </div>
     </a>
-    <div class="content-center">
+    <div class="flex space-x-6">
       <%= if @current_user do %>
-        <%!-- <input
-          type="text"
-          class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-light placeholder-white/50 text-white font-brand font-regular text-sm sm:mr-6 mr-2 border-white/50 transition sm:w-48 w-28"
-          placeholder="Search Gists..."
-        /> --%>
-
-        <%!-- <.form :let={f} for={%{}} as={:search} action={~p"/gist/search"} method="get">
-          <.input
-            field={f[:query]} 
-            placeholder="Search Gists..."
-            class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-light placeholder-white/50 text-white font-brand font-regular text-sm sm:mr-6 mr-2 border-white/50 transition sm:w-48 w-28"
-          />
-        </.form> --%>
-
-        <.form :let={f} for={%{}}  action={~p"/gist/search"} method="get">
+        <.form :let={f} for={%{}}  action={~p"/gist/search"} method="get" class="justify-center snap-center self-center text-center items-center origin-center object-center content-center place-self-center place-items-center">
           <.input
             field={f[:search_term]} 
             placeholder="Search Gists..."
             class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-light placeholder-white/50 text-white font-brand font-regular text-sm sm:mr-6 mr-2 border-white/50 transition sm:w-48 w-28"
           />
         </.form>
-
       <% else %>
         <input
           type="text"
@@ -41,7 +26,7 @@
         />
       <% end %>
       <a
-        class="flex-row text-white sm:text-[1.2rem] font-brand font-bold hover:text-gistLav transition"
+        class="text-white sm:text-[1.2rem] font-brand font-bold hover:text-gistLav transition self-center"
         href={~p"/gist/all"}
       >
         All Gists
