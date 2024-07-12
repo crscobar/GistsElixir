@@ -21,6 +21,16 @@ defmodule ElixirGistWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    live_session :get_current_user,
+      on_mount: [{ElixirGistWeb.UserAuth, :mount_current_user}] do
+      live "/create", CreateGistLive
+      live "/gist/all", AllGistLive
+      live "/gist", GistLive
+      live "/about", AboutLive
+      live "/gist/search", SearchGistLive
+    end
+
   end
 
   # Other scopes may use custom stacks.
@@ -66,10 +76,10 @@ defmodule ElixirGistWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{ElixirGistWeb.UserAuth, :ensure_authenticated}] do
-      live "/create", CreateGistLive
-      live "/gist", GistLive
+      # live "/create", CreateGistLive
+      # live "/gist", GistLive
       live "/gist/yours", YourGistLive
-      live "/gist/all", AllGistLive
+      # live "/gist/all", AllGistLive
       live "/gist/saved", SavedGistLive
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email

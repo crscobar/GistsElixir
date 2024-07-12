@@ -202,7 +202,7 @@ defmodule ElixirGistWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
-      <div class="mt-10 space-y-8 bg-white">
+      <div class="">
         <%= render_slot(@inner_block, f) %>
         <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
           <%= render_slot(action, f) %>
@@ -222,6 +222,7 @@ defmodule ElixirGistWeb.CoreComponents do
   """
   attr :type, :string, default: nil
   attr :class, :string, default: nil
+  attr :disabled, :boolean, default: false
   attr :rest, :global, include: ~w(disabled form name value)
 
   slot :inner_block, required: true
@@ -236,6 +237,7 @@ defmodule ElixirGistWeb.CoreComponents do
         @class
       ]}
       {@rest}
+      disabled={@disabled}
     >
       <%= render_slot(@inner_block) %>
     </button>
@@ -354,7 +356,7 @@ defmodule ElixirGistWeb.CoreComponents do
         id={@id}
         name={@name}
         class={[
-          "mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
+          "block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
           "min-h-[6rem] phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400",
           @errors == [] && "border-zinc-300 focus:border-zinc-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"
@@ -377,7 +379,7 @@ defmodule ElixirGistWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
+          "block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
           "phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400",
           @errors == [] && "border-zinc-300 focus:border-zinc-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"
@@ -595,6 +597,97 @@ defmodule ElixirGistWeb.CoreComponents do
   def icon(%{name: "hero-" <> _} = assigns) do
     ~H"""
     <span class={[@name, @class]} />
+    """
+  end
+
+  @doc """
+
+  ## Examples
+
+      <.gists_header type="Saved Gists" num_gists={length(@user_saved_gists)}/>
+      <.gists_header type="All Gists" num_gists={length(@all_gists)}/>
+  """
+  attr :type, :string, required: true
+  attr :num_gists, :integer, required: true
+
+  def gists_header(assigns) do
+    ~H"""
+    <div class="gist-gradient flex flex-col items-center justify-center p-2">
+      <div class="flex justify-between w-full mt-24 max-w-[70rem] transition-all">
+        <div class="flex items-center shrink-0 ml-4">
+          <div class="shrink-0 text-xl sm:text-2xl text-white font-bold">
+            <%= @type %> Gists
+          </div>
+          <div class="items-center text-center bg-transparent text-white font-brand text-sm w-6 h-6 p-[1.5px] rounded-full border-white border-[1px] translate-x-2 translate-y-[2px]">
+            <%= @num_gists %>
+          </div>
+        </div>
+      </div>
+    </div>
+    """
+  end
+
+  @doc """
+
+  ## Examples
+
+      <.gists_header_trailing type="Saved Gists" trailing="Hello" num_gists={length(@user_saved_gists)}/>
+      <.gists_header_trailing type="All Gists" trailing="After" num_gists={length(@all_gists)}/>
+  """
+  attr :trailing, :string, required: true
+  attr :num_gists, :integer, required: true
+
+  def gists_header_trailing(assigns) do
+    ~H"""
+    <div class="gist-gradient flex flex-col items-center justify-center p-2">
+      <div class="flex justify-between w-full mt-24 max-w-[70rem] transition-all">
+        <div class="flex items-center shrink-0 ml-4">
+          <div class="shrink-0 text-xl sm:text-2xl text-white font-bold">
+            Gists <%= @trailing %>
+          </div>
+          <div class="items-center text-center bg-transparent text-white font-brand text-sm w-6 h-6 p-[1.5px] rounded-full border-white border-[1px] translate-x-2 translate-y-[2px]">
+            <%= @num_gists %>
+          </div>
+        </div>
+      </div>
+    </div>
+    """
+  end
+
+  @doc """
+
+  ## Examples
+
+      <.pagination_footer type="Saved Gists" num_gists={length(@user_saved_gists)}/>
+      <.pagination_footer type="All Gists" num_gists={length(@all_gists)}/>
+  """
+
+  attr :page_number, :integer, required: true
+  attr :total_pages, :integer, required: true
+
+  def pagination_footer(assigns) do
+    ~H"""
+    <nav class="items-center justify-center p-6">
+      <ul class="items-center justify-center flex my-2">
+        <li class="">
+          <a class={"px-2 py-2 " <> if @page_number <= 1, do: "pointer-events-none text-gray-400", else: "text-gistLav-dark hover:text-gistLav-light transition"} href="#" phx-click="nav" phx-value-page={@page_number - 1}>
+            Previous
+          </a>
+        </li>
+        <%= for idx <-  Enum.to_list(1..@total_pages) do %>
+          <li class="">
+            <a class={"px-2 py-2 " <> if @page_number == idx, do: "pointer-events-none text-gray-400", else: "text-gistLav-dark hover:text-gistLav-light transition"} href="#" phx-click="nav" phx-value-page={idx}>
+              <%= idx %>
+            </a>
+          </li>
+        <% end %>
+        <li class="">
+          <a class={"px-2 py-2 " <> if @page_number >= @total_pages, do: "pointer-events-none text-gray-400", else: "text-gistLav-dark hover:text-gistLav-light transition"} href="#" phx-click="nav" phx-value-page={@page_number + 1}>
+            Next
+          </a>
+        </li>
+      </ul>
+    </nav>
     """
   end
 

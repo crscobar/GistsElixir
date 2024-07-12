@@ -1,21 +1,19 @@
-<.gists_header type="Your" num_gists={@user_gists.total_entries} />
+<.gists_header_trailing trailing="Results" num_gists={@searched_gists.total_entries} />
 
 <div class="2xl:container 2xl:mx-auto transition">
-  <%= if (@user_gists.total_entries == 0) do %>
+  <%= if (@searched_gists.total_entries == 0) do %>
     <div class="text-center pb-10">
-      <h1 class="text-3xl font-brand font-bold">You haven't created any gists yet :(</h1>
+      <h1 class="text-3xl font-brand font-bold">We couldn't find any gists matching: '<%= @search_term %>' </h1>
       <h2 class="text-xl font-brand font-normal text-white/90 pt-10">
-        Try 
-        <a href={~p"/create"} class="font-bold text-bold text-gistLav-dark hover:text-gistLav-light transition">creating a gist</a>
-        and sharing it!
+        Try a different search!
       </h2>
     </div>    
   <% else %>
     <div id="gists-section" class="w-full items-center mt-10 px-2">
-      <%= for {g, index} <- Enum.with_index(@user_gists.entries) do %>
+      <%= for {g, index} <- Enum.with_index(@searched_gists) do %>
         <div id={"syntax-section-#{index}"} style="display: lock" class="w-full mb-10 mr-auto ml-auto max-w-[70rem] px-4">
           <div id={"gist-metadata-#{index}"} class="flex pb-4 w-fit">
-            <%= if (g.user_id == @current_user.id) do %>
+            <%= if (@current_user != nil and (g.user_id == @current_user.id)) do %>
               <img src={@current_user.profile_image} class="round-image-padding w-10 h-10 " alt="Profile Image" />
             <% else %>
               <img
@@ -54,6 +52,7 @@
       <% end %>
     </div>
 
-    <.pagination_footer page_number={@user_gists.page_number} total_pages={@user_gists.total_pages} />
+  <.pagination_footer page_number={@searched_gists.page_number} total_pages={@searched_gists.total_pages} />
   <% end %>
 </div>
+

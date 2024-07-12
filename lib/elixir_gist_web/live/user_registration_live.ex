@@ -6,7 +6,7 @@ defmodule ElixirGistWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="em-gradient flex flex-col items-center justify-center">
+    <div class="gist-gradient flex flex-col items-center justify-center pt-24">
       <h1 class="font-brand font-bold text-3xl text-white py-2">
         Register for an account
       </h1>
@@ -14,23 +14,20 @@ defmodule ElixirGistWeb.UserRegistrationLive do
         Already registered?
         <.link
           navigate={~p"/users/log_in"}
-          class="font-semibold text-brand hover:underline text-emLavender-dark"
+          class="font-semibold text-brand hover:underline text-gistPurp-light"
         >
           Sign in
         </.link>
         to your account now.
       </h3>
     </div>
-    <div class="mx-auto max-w-sm">
-      <.form
-        for={@form}
-        id="registration_form"
-        phx-submit="save"
-      >
+    <div class="mx-auto max-w-sm pt-10">
+      <.form for={@form} id="registration_form" phx-submit="save">
         <.input field={@form[:email]} type="email" placeholder="Email" required />
         <.input field={@form[:password]} type="password" placeholder="Password" required />
+        <.input field={@form[:username]} type="text" placeholder="Username" required />
         <div class="py-6">
-          <.button phx-disable-with="Creating account..." class="create_button w-full">
+          <.button phx-disable-with="Creating account..." class="gist-button w-full">
             Create an account
           </.button>
         </div>

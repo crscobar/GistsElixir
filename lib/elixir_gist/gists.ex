@@ -5,6 +5,7 @@ defmodule ElixirGist.Gists do
   require Logger
 
   import Ecto.Query, warn: false
+  alias ElixirGist.Gists
   alias ElixirGist.Repo
 
   alias ElixirGist.Gists.Gist
@@ -19,8 +20,11 @@ defmodule ElixirGist.Gists do
       [%Gist{}, ...]
 
   """
-  def list_gists do
-    Repo.all(Gist)
+  def list_gists(page) do
+    gists =
+      Gist
+      |> ElixirGist.Repo.paginate(page: page, page_size: 10)
+    gists
   end
 
 
@@ -33,11 +37,12 @@ defmodule ElixirGist.Gists do
       [%Gist{}, ...]
 
   """
-  def list_user_gists(%User{} = user) do
-    query = from(g in Gist, where: g.user_id == ^user.id)
-    ans = Repo.all(query)
-    IO.inspect(ans)
-    ans
+  def list_user_gists(%User{} = user, page) do
+    user_gists =
+      Gist
+      |> where([g], g.user_id == ^user.id)
+      |> Repo.paginate(page: page, page_size: 10)
+    user_gists
   end
 
   @doc """
@@ -159,11 +164,30 @@ defmodule ElixirGist.Gists do
       [%Gist{}, ...]
 
   """
-  def list_user_saved_gists(%User{} = user) do
-    query = from(g in SavedGist, where: g.user_id == ^user.id, preload: [:gist])
-    saved_gist_ids = Repo.all(query)
-    IO.inspect(saved_gist_ids)
+  def list_user_saved_gists(%User{} = user, page) do
+    saved_gist_ids =
+      SavedGist
+      |> where([g], g.user_id == ^user.id)
+      |> preload([:gist])
+      |> Repo.paginate(page: page, page_size: 10)
     saved_gist_ids
+  end
+
+  @doc """
+  Returns a list of all gists containing search term in title or text.
+
+  ## Examples
+
+      iex> search_gists_for_term()
+      [%Gist{}, ...]
+
+  """
+  def search_gists_for_term(search_term, page) do
+    matching_gists =
+      Gist
+      |> where([g], ilike(g.name, ^"%#{search_term}%") or ilike(g.markup_text, ^"%#{search_term}%"))
+      |> Repo.paginate(page: page, page_size: 10)
+    matching_gists
   end
 
   @doc """
@@ -180,7 +204,26 @@ defmodule ElixirGist.Gists do
       ** (Ecto.NoResultsError)
 
   """
-  def get_saved_gist!(id), do: Repo.get!(SavedGist, id)
+  def get_saved_gist!(gist_id), do: Repo.get_by(SavedGist, gist_id: gist_id)
+
+  @doc """
+  Gets a single saved_gist.
+
+  Raises `Ecto.NoResultsError` if the Saved gist does not exist.
+
+  ## Examples
+
+      iex> get_saved_gist!(123)
+      %SavedGist{}
+
+      iex> get_saved_gist!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_user_saved_gist(gist_id, user_id) do
+    gist = Repo.one(from sg in SavedGist, where: sg.gist_id == ^gist_id and sg.user_id == ^user_id)
+    gist
+  end
 
   @doc """
   Creates a saved_gist.
@@ -195,8 +238,6 @@ defmodule ElixirGist.Gists do
 
   """
   def create_saved_gist(user, attrs \\ %{}) do
-    IO.puts("IN CREATE SAVED GIST")
-    IO.inspect(attrs)
     user
     |> Ecto.build_assoc(:saved_gists)
     |> SavedGist.changeset(attrs)
@@ -233,8 +274,28 @@ defmodule ElixirGist.Gists do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_saved_gist(%SavedGist{} = saved_gist) do
-    Repo.delete(saved_gist)
+  def delete_saved_gist(attrs) do
+    gist = Gists.get_saved_gist!(attrs.gist_id)
+    gist
+    |> Repo.delete()
+  end
+
+  @doc """
+  Deletes a saved_gist for given user_id.
+
+  ## Examples
+
+      iex> delete_saved_gist(saved_gist)
+      {:ok, %SavedGist{}}
+
+      iex> delete_saved_gist(saved_gist)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_user_saved_gist(attrs) do
+    sg = Gists.get_user_saved_gist(attrs.gist_id, attrs.user_id)
+    sg
+    |> Repo.delete()
   end
 
   @doc """

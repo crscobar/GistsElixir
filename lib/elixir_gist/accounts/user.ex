@@ -1,6 +1,7 @@
 defmodule ElixirGist.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "users" do
@@ -8,6 +9,8 @@ defmodule ElixirGist.Accounts.User do
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
+    field :username, :string
+    field :profile_image, :string, default: "/images/user-hand.svg"
     has_many :gists, ElixirGist.Gists.Gist
     has_many :saved_gists, ElixirGist.Gists.SavedGist
 
@@ -39,9 +42,10 @@ defmodule ElixirGist.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:email, :password, :username])
     |> validate_email(opts)
     |> validate_password(opts)
+    |> validate_username(opts)
   end
 
   defp validate_email(changeset, opts) do
@@ -61,6 +65,14 @@ defmodule ElixirGist.Accounts.User do
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
     # |> validate_format(:password, ~r/[!?@#$%^&*_0-9]/, message: "at least one digit or punctuation character")
     |> maybe_hash_password(opts)
+  end
+
+  defp validate_username(changeset, _opts) do
+    changeset
+    |> validate_required([:username])
+    |> validate_length(:username, min: 3, max: 36)
+    |> unsafe_validate_unique(:username, ElixirGist.Repo)
+    |> unique_constraint(:username)
   end
 
   defp maybe_hash_password(changeset, opts) do
@@ -106,6 +118,21 @@ defmodule ElixirGist.Accounts.User do
   end
 
   @doc """
+  A user changeset for changing the username.
+
+  It requires the email to change otherwise an error is added.
+  """
+  def username_changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, [:username])
+    |> validate_username(opts)
+    |> case do
+      %{changes: %{username: _}} = changeset -> changeset
+      %{} = changeset -> add_error(changeset, :username, "did not change")
+    end
+  end
+
+  @doc """
   A user changeset for changing the password.
 
   ## Options
@@ -122,6 +149,14 @@ defmodule ElixirGist.Accounts.User do
     |> cast(attrs, [:password])
     |> validate_confirmation(:password, message: "does not match password")
     |> validate_password(opts)
+  end
+
+  @doc """
+  A User changeset for updating Profile Image
+  """
+  def profile_image_changeset(user, attrs, _opts \\ []) do
+    user
+    |> cast(attrs, [:profile_image])
   end
 
   @doc """

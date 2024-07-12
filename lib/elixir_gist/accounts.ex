@@ -215,6 +215,59 @@ defmodule ElixirGist.Accounts do
     end
   end
 
+  @doc """
+  Returns an `%Ecto.Changeset{}` for changing the users username.
+
+  ## Examples
+
+      iex> change_user_username(user)
+      %Ecto.Changeset{data: %User{}}
+
+  """
+  def change_user_username(user, attrs \\ %{}) do
+    User.username_changeset(user, attrs, validate_username: false)
+  end
+
+  @doc """
+  Updates the users username.
+
+  ## Examples
+
+      iex> update_user_username(user, "valid password", %{password: ...})
+      {:ok, %User{}}
+
+      iex> update_user_username(user, "invalid password", %{password: ...})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_user_username(user, password, attrs) do
+    changeset =
+      user
+      |> User.username_changeset(attrs)
+      |> User.validate_current_password(password)
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.update(:user, changeset)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{user: user}} -> {:ok, user}
+      {:error, :user, changeset, _} -> {:error, changeset}
+    end
+  end
+
+  @doc """
+  Returns an `%Ecto.Chageset{}` for updating the user profile_image.
+  """
+  def change_profile_image(user, attrs \\ %{}) do
+    User.profile_image_changeset(user, attrs)
+  end
+
+  def update_profile_image(%User{} = user, attrs) do
+    user
+    |> User.profile_image_changeset(attrs)
+    |> Repo.update()
+  end
+
   ## Session
 
   @doc """

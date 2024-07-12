@@ -5,12 +5,12 @@ defmodule ElixirGistWeb.UserResetPasswordLive do
 
   def render(assigns) do
     ~H"""
-    <div class="em-gradient flex flex-col items-center justify-center">
+    <div class="gist-gradient flex flex-col items-center justify-center pt-24">
       <h1 class="font-brand font-bold text-3xl text-white py-2">
         Reset Password
       </h1>
     </div>
-    <div class="mx-auto max-w-sm">
+    <div class="mx-auto max-w-sm pt-10">
       <.form for={@form} id="reset_password_form" phx-submit="reset_password" phx-change="validate">
         <.error :if={@form.errors != []}>
           Oops, something went wrong! Please check the errors below.
@@ -23,7 +23,7 @@ defmodule ElixirGistWeb.UserResetPasswordLive do
           required
         />
         <div class="pt-6">
-          <.button phx-disable-with="Resetting..." class="create_button w-full">
+          <.button phx-disable-with="Resetting..." class="gist-button w-full">
             Reset Password
           </.button>
         </div>

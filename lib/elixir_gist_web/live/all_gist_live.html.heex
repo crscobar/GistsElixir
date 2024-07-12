@@ -1,62 +1,49 @@
-<div class="gist-gradient flex flex-col items-center justify-center p-4">
-  <div class="flex justify-between w-full mb-10 px-4">
-    <div class="flex items-center ml-10">
-      <img
-        src="/images/user-image.svg"
-        class="round-image-padding w-8 h-8"
-        alt="Profile Image"
-      />
-      <div class="flex flex-col ml-4">
-        <div class="text-lg text-white font-bold">
-          All Public Gists
-        </div>
-      </div>
-    </div>
-    <div class="flex items-center mr-10">
-      <div class="flex items-center bg-transparent text-white font-brand h-8 rounded-md border-white border-[1px] px-3">
-        Total Public Gists:
-        <%= length(@all_gists) %>
-      </div>
-    </div>
-  </div>
-</div>
+<.gists_header type="All" num_gists={@all_gists.total_entries} />
 
-<div class="text-white text-xl p-16 flex flex-col">
-  <div id="edit-section">
-    <%= for {g, index} <- Enum.with_index(@all_gists) do %>
-      <div id={"syntax-section-#{index}"} style="display: lock">
-        <div class="justify-center px-28 w-full mb-10">
-          <div class="flex p-2 items-center justify-between bg-gistDark rounded-t-md border">
-            <div class="w-[300px] pl-2 font-brand font-bold text-base text-gistLav-dark">
-              <%= g.name %>
+<div class="2xl:container 2xl:mx-auto transition">
+  <div id="gists-section" class="w-full items-center mt-10 px-2">
+    <%= for {g, index} <- Enum.with_index(@all_gists.entries) do %>
+      <div id={"syntax-section-#{index}"} style="display: lock" class="w-full mb-10 mr-auto ml-auto max-w-[70rem] px-4">
+        <div id={"gist-metadata-#{index}"} class="flex pb-4 w-fit">
+          <%= if (@current_user != nil and (g.user_id == @current_user.id)) do %>
+            <img src={@current_user.profile_image} class="round-image-padding w-10 h-10 " alt="Profile Image" />
+          <% else %>
+            <img
+              src={get_user_profile_image(g.user_id)}
+              class="round-image-padding w-10 h-10"
+              alt="Anon User Image"
+            />
+          <% end %>
+          <div class="justify-start mr-auto ml-4">
+            <span class="font-normal text-base text-gistLav-dark"><%= get_username_from_user_id(g.user_id) %></span>
+            <span class="text-white">/</span>
+            <a href={~p"/gist?id=#{g.id}"} class="font-bold text-bol text-gistLav-dark hover:text-gistLav-light transition"><%= g.name %></a>
+            <div class="text-sm text-white/70 font-normal">
+              <%= "Updated #{get_relative_time(g) |> elem(1)}" %>
             </div>
-            <div>
-              <button
-                id={"goto-button-#{index}"}
-                class="interactive-image-button px-1"
-                type="button"
-                phx-click="redirect"
-                phx-value-id={g.id}
-              >
-                <img src="/images/link.svg" alt="Link Button" />
-              </button>
+            <div class="text-sm text-white/70 font-normal">
+              <%= g.description %>
             </div>
           </div>
-          <div id={"gist-wrapper-#{index}"} class="flex w-full">
-            <textarea id={"syntax-numbers-#{index}"} class="syntax-numbers rounded-bl-md" readonly></textarea>
-            <div
-              id={"highlight-#{index}"}
-              class="syntax-area w-full rounded-br-md"
-              phx-hook="Highlight"
-              data-name={g.name}
-            >
-              <pre><code>
-                <%= g.markup_text %>
-              </code></pre>
-            </div>
+        </div>
+        
+        <div id={"gist-wrapper-#{index}"} class="group flex justify-center">
+          <textarea id={"syntax-numbers-#{index}"} class="syntax-numbers rounded-l-md" readonly />
+          <div
+            id={"highlight-#{index}"}
+            class="syntax-area"
+            phx-hook="Highlight"
+            data-name={g.name}
+          >
+            <pre><code>
+              <%= g.markup_text %>
+            </code></pre>
           </div>
         </div>
       </div>
     <% end %>
   </div>
+
+  <.pagination_footer page_number={@all_gists.page_number} total_pages={@all_gists.total_pages} />
 </div>
+

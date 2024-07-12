@@ -17,8 +17,8 @@ module.exports = {
         gistSyntax: "#282C34", 
         gistDark: {
           dark: "#010101",
-          DEFAULT: "#3C3B3B",
-          light: "#828282"
+          DEFAULT: "#1c1622",
+          light: "#362b3d"
         },
         gistPurp: {
           dark: "#693a7a",
@@ -32,7 +32,7 @@ module.exports = {
         }
       },
       fontFamily: {
-        brand: ["WorkSans", "sans-serif"]
+        brand: ["SFMono", "sans-serif"]
       },
       fontWeight: {
         regular: "normal",

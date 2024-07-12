@@ -60,7 +60,8 @@ defmodule ElixirGist.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
       {:phoenix_html_helpers, "~> 1.0"},
-      {:timex, "~> 3.7"}
+      {:timex, "~> 3.7"},
+      {:scrivener_ecto, "~> 2.0"}
     ]
   end
 

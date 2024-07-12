@@ -5,13 +5,13 @@ defmodule ElixirGistWeb.CreateGistLive do
   alias ElixirGistWeb.GistFormComponent
 
   def mount(_params, _session, socket) do
-   {:ok, socket}
+    {:ok, socket}
   end
 
   def render(assigns) do
     ~H"""
-    <div class="gist-gradient flex items-center justify-center">
-      <h1 class="font-brand font-bold text-3xl text-white">
+    <div class="gist-gradient flex items-center justify-center pt-24">
+      <h1 class="flex font-brand font-bold text-3xl text-white text-center">
         Instantly share Elixir code, notes, and snippets.
       </h1>
     </div>
