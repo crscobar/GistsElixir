@@ -57,10 +57,10 @@ defmodule ElixirGistWeb.UserRegistrationLive do
           )
 
         changeset = Accounts.change_user_registration(user)
-        {:noreply, socket |> assign(trigger_submit: true) |> assign_form(changeset)}
+        {:noreply, socket |> assign(trigger_submit: true) |> assign_form(changeset) |> put_flash(:info, "Account was created! Login to newly created account.") |> redirect(to: ~p"/users/log_in")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, socket |> assign(check_errors: true) |> assign_form(changeset)}
+        {:noreply, socket |> assign(check_errors: true) |> assign_form(changeset) |> put_flash(:info, "Account was NOT created.")}
     end
   end
 
