@@ -13,7 +13,7 @@ defmodule ElixirGistWeb.UserLoginLive do
           navigate={~p"/users/register"}
           class="font-semibold text-brand hover:underline text-emLavender-dark text-gistPurp hover:text-gistPurp-light transition"
         >
-          Sign up
+          Register
         </.link>
         for an account now.
       </h3>
