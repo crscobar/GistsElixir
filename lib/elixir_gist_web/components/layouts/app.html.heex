@@ -25,9 +25,9 @@
           />
         </.form> --%>
 
-        <.form :let={f} for={%{}} as={:search_term} action={~p"/gist/search"} method="get">
+        <.form :let={f} for={%{}}  action={~p"/gist/search"} method="get">
           <.input
-            field={f[:query]} 
+            field={f[:search_term]} 
             placeholder="Search Gists..."
             class="rounded-lg focus:outline-none focus:border-gistLav focus:ring-0 px-3 py-1 bg-gistDark-light placeholder-white/50 text-white font-brand font-regular text-sm sm:mr-6 mr-2 border-white/50 transition sm:w-48 w-28"
           />

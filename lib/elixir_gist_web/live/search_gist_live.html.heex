@@ -1,16 +1,8 @@
-<div class="2xl:container 2xl:mx-auto transition">
-  Hello :)
-  
-  <p>The search term is:  <%= @search_term %></p>
-  <p>Found:  <%= inspect(search_gists_for_term(@search_term)) %></p>
-  
-</div>
-
-<.gists_header type="Matching" num_gists={1} />
+<.gists_header type="Matching" num_gists={@searched_gists.total_entries} />
 
 <div class="2xl:container 2xl:mx-auto transition">
   <div id="gists-section" class="w-full items-center mt-10 px-2">
-    <%= for {g, index} <- Enum.with_index(search_gists_for_term(@search_term)) do %>
+    <%= for {g, index} <- Enum.with_index(@searched_gists) do %>
       <div id={"syntax-section-#{index}"} style="display: lock" class="w-full mb-10 mr-auto ml-auto max-w-[70rem] px-4">
         <div id={"gist-metadata-#{index}"} class="flex pb-4 w-fit">
           <%= if (@current_user != nil and (g.user_id == @current_user.id)) do %>
@@ -52,6 +44,6 @@
     <% end %>
   </div>
 
-  <.pagination_footer page_number={1} total_pages={1} />
+  <.pagination_footer page_number={@searched_gists.page_number} total_pages={@searched_gists.total_pages} />
 </div>
 
