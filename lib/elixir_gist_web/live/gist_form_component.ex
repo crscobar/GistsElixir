@@ -29,7 +29,7 @@ defmodule ElixirGistWeb.GistFormComponent do
           />
           <div>
             <div class="flex bg-gistDark-light rounded-t-md border">
-              <div class="w-[300px] mb-2 ml-2">
+              <div class="w-[300px] my-2 ml-2">
                 <.input
                   field={@form[:name]}
                   placeholder="Filename with extension..."

@@ -83,7 +83,7 @@ form input[type="text"], input[type="email"], input[type="password"] :focus {
 }
 
 .syntax-area {
-    @apply bg-gistSyntax border text-sm border-white h-auto w-full rounded-r-md -white max-w-[68rem];
+    @apply bg-gistSyntax border text-sm border-white h-auto w-full rounded-r-md text-white max-w-[68rem];
     border-left: none;
     overflow-x: auto;
 }
