@@ -12,7 +12,7 @@ defmodule ElixirGistWeb.CreateGistLive do
     ~H"""
     <div class="gist-gradient flex items-center justify-center pt-24">
       <h1 class="flex font-brand font-bold text-3xl text-white text-center">
-        Instantly share code and snippets powered by Elixir!
+        Instantly share code snippets powered by Elixir!
       </h1>
     </div>
 
